@@ -1,0 +1,114 @@
+@font-face {
+  font-family: 'mulish light';
+  src: url(/public/fonts/Mulish-Light.ttf);
+}
+@font-face {
+  font-family: 'mulish regular';
+  src: url(/public/fonts/Mulish-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'mulish medium';
+  src: url(/public/fonts/Mulish-Medium.ttf);
+}
+
+@font-face {
+  font-family: 'mulish semibold';
+  src: url(/public/fonts/Mulish-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: 'mulish bold';
+  src: url(/public/fonts/Mulish-Bold.ttf);
+}
+
+@font-face {
+  font-family: 'mulish black';
+  src: url(/public/fonts/Mulish-Black.ttf);
+}
+
+:root {
+  --font-light: 'mulish light';
+  --font-regular: 'mulish regular';
+  --font-medium: 'mulish medium';
+  --font-semibold: 'mulish semibold';
+  --font-bold: 'mulish bold';
+  --font-black: 'mulish black';
+
+  --color-primary: #fcd535;
+  --color-primary-dark: #f1be06;
+  --color-white: #ffffff;
+  --color-white-alt: #e3e3e3;
+  --color-background-white: #ffffff;
+  --color-background-white-alt: #5b6674;
+  --color-background: #e6ecf3;
+  --color-background-light: #f6faff;
+  --color-secondary: #1e2329;
+  --color-secondary-light: #48525e;
+  --color-danger: #df3f2a;
+  --color-blue: #2e8bf9;
+  --color-green: #0acc29;
+
+  --color-product-1: #9e77ed;
+  --color-product-2: #f79009;
+  --color-product-3: #ee46bc;
+  --color-product-4: #f63d68;
+  --color-product-5: #6172f3;
+
+  --color-background: #e6ecf3;
+  --color-background-light: #f6faff;
+  --color-secondary: #1e2329;
+  --color-secondary-light: #48525e;
+  --color-text: #1e2329;
+
+  --cl-txt: #1e2329;
+  --cl-bg: #e6ecf3;
+  --cl-bg-light: #f6faff;
+  --cl-bg-white: #ffffff;
+
+  @media (prefers-color-scheme: dark) {
+    --color-text: #e3e3e3;
+    --color-background-white: #5b6674;
+    --color-secondary: #e6ecf3;
+    --color-secondary-light: #f6faff;
+    --color-background: #1e2329;
+    --color-background-light: #48525e;
+
+    --cl-txt: #e3e3e3;
+    --cl-bg: #1e2329;
+    --cl-bg-light: #48525e;
+    --cl-bg-white: #1e2329;
+  }
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*::-webkit-scrollbar-track {
+  background-color: var(--cl-bg);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--cl-bg-light);
+  border-radius: 100px;
+}
+
+html {
+  font-size: 10px;
+  font-family: var(--font-regular);
+
+  @media (max-width: 64em) {
+    font-size: 56.25%;
+  }
+
+  @media (max-width: 37.5em) {
+    font-size: 50%;
+  }
+}
+
+body {
+  font-size: 1.6rem;
+}
