@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   
@@ -44,6 +44,7 @@ const GlobalStyle = createGlobalStyle`
   --radius-normal: 10px;
 
   --cl-primary: #f1be06;
+  --cl-primary-opacity: #f1be0640;
   --cl-primary-light: #fcd535;
   --cl-secondary: #1E2329;
   --cl-secondary-light: #48525E;
@@ -63,12 +64,16 @@ const GlobalStyle = createGlobalStyle`
   --cl-bg: #E6ECF3;
   --cl-bg-light: #F6FAFF;
   --cl-bg-white: #FFFFFF;
+  --cl-border: #E6ECF3;
+  --cl-border-opacity: #E6ECF390;
   
   @media(prefers-color-scheme: dark){
     --cl-txt:#E3E3E3;
     --cl-bg: #1E2329;
     --cl-bg-light: #48525E;
     --cl-bg-white: #1E2329;
+    --cl-border: #48525E;
+    --cl-border-opacity: #48525E40;
   }
 }
 
@@ -111,6 +116,7 @@ body {
   background-color: var(--cl-bg);
 
   color: var(--cl-txt);
+  position: relative;
 }
 
 button{
@@ -125,8 +131,8 @@ button{
   }
 
   &:focus {
-    outline: 2px solid var(--cl-primary);
-    outline-offset: 1px;
+    outline: 2px solid var(--cl-primary-opacity);
+    outline-offset: 2px;
   }
 
   &:disabled{
@@ -141,10 +147,23 @@ img{
   object-position: center;
 }
 
+a{
+  color: inherit;
+  text-decoration: none;
+}
+ul{
+  list-style: none;
+}
+
 .center-element{
   text-align: center;
 }
-
+.opacity-7{
+  opacity: 0.7;
+}
+.opacity-5{
+  opacity: 0.5;
+}
 `;
 
 export default GlobalStyle;

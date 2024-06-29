@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { ButtonPrimary, FormInput, InputLabel } from '../components/elements';
-import { FormGroup } from '../components/elementComponents';
-import { NavLink } from 'react-router-dom';
+import styled from "styled-components";
+import { ButtonPrimary } from "../components/elements";
+import { FormGroup } from "../components/elementComponents";
+import { NavLink } from "react-router-dom";
 
 const Cover = styled.div`
   width: 100%;
@@ -45,7 +45,7 @@ const Content = styled.div`
     height: 10rem;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid var(--cl-bg-light);
+    border: 2px solid var(--cl-border);
     margin-bottom: 4rem;
     flex-shrink: 0;
   }
@@ -54,6 +54,14 @@ const Content = styled.div`
 const StyledForm = styled.form`
   width: 100%;
   max-width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  button {
+    margin-top: 2rem;
+  }
 `;
 
 function Login() {
@@ -73,7 +81,9 @@ function Login() {
             <FormGroup lable="password" id="password" type="password" />
             <FormGroup lable="" id="file" type="file" />
 
-            <ButtonPrimary type="button">Log In</ButtonPrimary>
+            <NavLink to="/profile">
+              <ButtonPrimary type="button">Log In</ButtonPrimary>
+            </NavLink>
           </StyledForm>
         </Content>
       </Container>

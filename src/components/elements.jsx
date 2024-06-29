@@ -1,6 +1,11 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 export const ButtonPrimary = styled.button`
+  --cl-btn-bg: var(--cl-secondary);
+  @media (prefers-color-scheme: dark) {
+    --cl-btn-bg: var(--cl-bg-light);
+  }
+
   width: 100%;
   padding: 1rem 2rem;
   text-align: center;
@@ -10,13 +15,12 @@ export const ButtonPrimary = styled.button`
   font-size: 1.6rem;
   outline: none;
   border: none;
-
   color: var(--cl-primary);
-  background-color: var(--cl-secondary);
+  background-color: var(--cl-btn-bg);
 
-  @media (prefers-color-scheme: dark) {
-    color: var(--cl-primary);
-    background-color: var(--cl-bg-light);
+  &:focus {
+    outline: 2px solid var(--cl-btn-bg);
+    outline-offset: 2px;
   }
 `;
 
@@ -98,17 +102,59 @@ const buttonStyles = {
 };
 export const Button = styled.button`
   padding: 1rem 2rem;
-  width: 100%;
-  max-width: 35rem;
   font-family: var(--font-bold);
 
-  ${(props) => (props.outlined ? buttonStyles.outlined[props.color] : buttonStyles.solid[props.color])}
-  ${(props) => (props.shape === 'round' ? 'border-radius: 100px;' : 'border-radius: var(--radius-normal);')}
+  &:focus {
+    outline: 2px solid var(--cl-${(props) => props.$color || "primary"});
+    outline-offset: 2px;
+  }
+
+  ${(props) => (props.$outlined ? buttonStyles.outlined[props.$color] : buttonStyles.solid[props.$color])}
+  ${(props) => (props.$shape === "round" ? "border-radius: 100px;" : "border-radius: var(--radius-normal);")}
+
+  ${(props) =>
+    props.$display === "flex" &&
+    css`
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      span {
+        font-size: 1.2em;
+        display: flex;
+        align-items: center;
+      }
+    `}
+
+  ${(props) =>
+    props.$size === "normal" &&
+    css`
+      width: 100%;
+      max-width: 35rem;
+    `}
+  ${(props) =>
+    props.$size === "small" &&
+    css`
+      width: max-content;
+      padding: 0.5rem 1.2rem;
+    `}
+  ${(props) =>
+    props.$size === "large" &&
+    css`
+      width: 100%;
+      padding-block: 1.3rem;
+      font-size: 1.8rem;
+    `}
+  ${(props) => props.$size === "small" && props.$shape !== "round" && "border-radius: var(--radius-small);"}
 `;
+Button.defaultProps = {
+  $color: "blue",
+  $outlined: false,
+  $shape: "round",
+  $size: "normal",
+};
 
 //
-
-Button.defaultProps = { color: 'blue', outlined: false, shape: 'round' };
 
 export const FormInput = styled.input`
   width: 100%;
@@ -116,13 +162,46 @@ export const FormInput = styled.input`
   padding: 1rem 1rem;
   font-size: 1.6rem;
   font-family: var(--font-regular);
-  border: 3px solid var(--cl-bg);
+  border: 3px solid var(--cl-border);
   background-color: transparent;
   outline: none;
   color: var(--cl-txt);
 
-  @media (prefers-color-scheme: dark) {
-    border-color: var(--cl-bg-light);
+  ${(props) => props.$textAlign && `text-align: ${props.$textAlign};`}
+
+  &:focus {
+    outline: 2px solid var(--cl-border);
+    outline-offset: 2px;
+  }
+
+  &[type="file"] {
+    padding-block: 0;
+    padding-left: 0;
+
+    &::-webkit-file-upload-button {
+      outline: none;
+      border: none;
+      background-color: var(--cl-bg);
+      font-family: var(--font-semibold);
+      padding: 1rem 2rem;
+      margin-right: 2rem;
+
+      @media (prefers-color-scheme: dark) {
+        background-color: var(--cl-bg-light);
+      }
+    }
+  }
+
+  &[type="color"] {
+    padding: 0;
+    border: 3px solid var(--cl-border);
+    height: 4.5rem;
+    background-color: transparent;
+    border-radius: 5px;
+  }
+
+  &[type="number"]::-webkit-inner-spin-button {
+    display: none;
   }
 `;
 
@@ -132,4 +211,9 @@ export const InputLabel = styled.label`
   text-transform: capitalize;
   margin-bottom: 0.5rem;
   display: block;
+`;
+
+export const ColoredText = styled.p`
+  display: inline-block;
+  ${(props) => `color: var(--cl-${props.$color || "secondary"})`}
 `;

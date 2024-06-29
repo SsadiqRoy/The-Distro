@@ -1,6 +1,6 @@
-import { Outlet } from 'react-router-dom';
-import ClientHeader from './ClientHeader';
-import styled from 'styled-components';
+import { Outlet } from "react-router-dom";
+import ClientHeader from "./ClientHeader";
+import styled from "styled-components";
 
 const Cover = styled.div`
   width: 100%;

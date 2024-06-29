@@ -1,11 +1,10 @@
-import styled from 'styled-components';
-import { StoreItem } from '../components/markups';
+import styled from "styled-components";
+import StoreItem from "../markups/StoreItem";
 
 const StyledMain = styled.main`
   width: 100%;
   height: 10rem;
   flex-grow: 1;
-  /* border: 1px solid green; */
 
   overflow: auto;
   display: grid;

@@ -1,21 +1,23 @@
 // import '../src/styles/style.css';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import GlobalStyle from './styles/globalStyles';
-import ClientLayout from './layouts/ClientLayout';
-import DashboardLayout from './layouts/DashboardLayout';
-import Dashboard from './pages/Dashboard';
-import Purchases from './pages/Purchases';
-import Supplies from './pages/Supplies';
-import Products from './pages/Products';
-import Supplier from './pages/Supplier';
-import Profile from './pages/Profile';
-import Login from './pages/Login';
-import Store from './pages/Store';
+import DashboardLayout from "./layouts/DashboardLayout";
+import ClientLayout from "./layouts/ClientLayout";
+import GlobalStyle from "./styles/globalStyles";
+import Dashboard from "./pages/Dashboard";
+import Purchases from "./pages/Purchases";
+import Products from "./pages/Products";
+import Supplies from "./pages/Supplies";
+import Supplier from "./pages/Supplier";
+import Profile from "./pages/Profile";
+import Login from "./pages/Login";
+import Store from "./pages/Store";
 
-const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 1 } } });
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { staleTime: 1 } },
+});
 
 function App() {
   return (
@@ -33,14 +35,14 @@ function App() {
 
           <Route element={<DashboardLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="purchase" element={<Purchases />} />
+            <Route path="purchases" element={<Purchases />} />
             <Route path="supplies" element={<Supplies />} />
+            <Route path="supplies/:filter" element={<Supplies />} />
             <Route path="Products" element={<Products />} />
             <Route path="profile" element={<Profile />} />
           </Route>
 
           <Route path="login" element={<Login />} />
-          {/*  */}
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
