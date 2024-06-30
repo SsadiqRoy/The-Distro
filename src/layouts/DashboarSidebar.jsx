@@ -1,9 +1,11 @@
 import { BsCart4 } from "react-icons/bs";
+import { FaTimes } from "react-icons/fa";
 import { FaCubesStacked } from "react-icons/fa6";
 import { HiOutlineHome } from "react-icons/hi2";
 import { PiNotepadBold } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { useResponsive } from "../context/Responsive";
 
 const StyledSidebar = styled.aside`
   width: 100%;
@@ -16,8 +18,43 @@ const StyledSidebar = styled.aside`
   flex-direction: column;
   justify-content: space-between;
 
+  transition: all 0.5s ease;
+
+  @media (max-width: 68.75em) {
+    max-width: 25rem;
+    position: absolute;
+    z-index: 15;
+    left: 0;
+    top: 0;
+    border: 3px solid var(--cl-bg-light);
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    transform: translateX(${(p) => (p.$isOpen ? "0" : "-100%")});
+  }
+
   .sidebar-top {
     margin-top: 2rem;
+
+    @media (max-width: 68.75em) {
+      margin-top: 1rem;
+    }
+
+    &-close {
+      display: none;
+      padding-right: 1rem;
+
+      > span {
+        cursor: pointer;
+      }
+
+      @media (max-width: 68.75em) {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        font-size: 2rem;
+      }
+    }
 
     &-logo {
       text-align: center;
@@ -92,36 +129,45 @@ const StyledSidebar = styled.aside`
 `;
 
 function DashboarSidebar() {
+  const { isOpenSidebar, setOpenSidebar } = useResponsive();
+
+  const closeSidebar = () => setOpenSidebar(false);
+
   return (
-    <StyledSidebar>
+    <StyledSidebar $isOpen={isOpenSidebar}>
       <div className="sidebar-top">
+        <div className="sidebar-top-close">
+          <span onClick={closeSidebar}>
+            <FaTimes />
+          </span>
+        </div>
         <div className="sidebar-top-logo">
-          <NavLink to="/">
+          <NavLink to="/" onClick={closeSidebar}>
             <img src="/images/distro-logo.svg" alt="The Distro Logo" />
           </NavLink>
         </div>
         <div className="sidebar-pages">
           <ul>
             <li>
-              <NavLink to="/dashboard">
+              <NavLink to="/dashboard" onClick={closeSidebar}>
                 <HiOutlineHome />
                 <span>Home</span>
               </NavLink>
             </li>
             <li>
-              <NavLink to="/purchases">
+              <NavLink to="/purchases" onClick={closeSidebar}>
                 <BsCart4 />
                 <span>Purchases</span>
               </NavLink>
             </li>
             <li>
-              <NavLink to="/supplies">
+              <NavLink to="/supplies" onClick={closeSidebar}>
                 <PiNotepadBold />
                 <span>Supplies</span>
               </NavLink>
             </li>
             <li>
-              <NavLink to="/products">
+              <NavLink to="/products" onClick={closeSidebar}>
                 <FaCubesStacked />
                 <span>Products</span>
               </NavLink>
@@ -130,7 +176,7 @@ function DashboarSidebar() {
         </div>
       </div>
 
-      <NavLink to="/profile" className="sidebar-bottom">
+      <NavLink to="/profile" className="sidebar-bottom" onClick={closeSidebar}>
         <div className="sidebar-bottom-image">
           <img src="/images/profile-image.jpg" alt="The Distro Logo" />
         </div>

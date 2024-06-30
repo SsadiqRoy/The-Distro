@@ -7,15 +7,14 @@ const StyledSupplierItem = styled.div`
   width: 100%;
   min-width: 1000px;
   padding: 1rem;
-  border-radius: var(--radius-normal);
   background-color: var(--cl-bg-white);
+  border-bottom: 1px solid var(--cl-border-opacity);
 
   display: grid;
   grid-template-columns: 1fr 1.5fr 0.3fr 1fr 1fr 1fr 0.2fr 1fr;
   gap: 0.5rem;
   justify-items: center;
   align-items: center;
-  margin-bottom: 1rem;
 
   > * {
     display: inline-block;

@@ -11,6 +11,10 @@ const StyledCotent = styled.div`
   background-color: var(--cl-bg-white);
   padding: 2.5rem;
   border-radius: var(--radius-normal);
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Account = styled.div`
@@ -36,6 +40,16 @@ const Account = styled.div`
     grid-template-columns: 1fr 1fr;
     gap: 2rem 4rem;
 
+    @media (max-width: 37.5em) {
+      display: flex;
+      flex-direction: column;
+      row-gap: 1rem;
+
+      button {
+        margin-top: 1rem;
+      }
+    }
+
     button {
       grid-row: 3;
       grid-column: 2;
@@ -49,6 +63,10 @@ const Password = styled.div`
   grid-template-columns: 1fr 1fr;
   column-gap: 4rem;
 
+  @media (max-width: 37.5em) {
+    display: block;
+  }
+
   form {
     display: flex;
     flex-direction: column;
@@ -61,6 +79,10 @@ const Password = styled.div`
 
   > :nth-child(2) {
     align-self: end;
+
+    @media (max-width: 37.5em) {
+      margin-top: 7rem;
+    }
   }
 `;
 

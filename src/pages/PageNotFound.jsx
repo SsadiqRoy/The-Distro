@@ -1,7 +1,6 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { ButtonPrimary } from "../components/elements";
-import { FormGroup } from "../components/elementComponents";
-import { NavLink } from "react-router-dom";
 
 const Cover = styled.div`
   width: 100%;
@@ -60,20 +59,7 @@ const Content = styled.div`
   }
 `;
 
-const StyledForm = styled.form`
-  width: 100%;
-  max-width: 500px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-
-  button {
-    margin-top: 2rem;
-  }
-`;
-
-function Login() {
+function PageNotFound() {
   return (
     <Cover>
       <Container>
@@ -82,21 +68,15 @@ function Login() {
             <img src="/images/distro-logo.svg" alt="The Distro Logo" />
           </NavLink>
 
-          <StyledForm>
-            <div className="center-element">
-              <h1>Log In</h1>
-            </div>
-            <FormGroup lable="email" id="email" type="email" />
-            <FormGroup lable="password" id="password" type="password" />
+          <div className="center-elemet">
+            <h1 style={{ marginBottom: "3rem" }}>404 Page Not Found</h1>
 
-            <NavLink to="/dashboard">
-              <ButtonPrimary type="button">Log In</ButtonPrimary>
-            </NavLink>
-          </StyledForm>
+            <ButtonPrimary>Get to app</ButtonPrimary>
+          </div>
         </Content>
       </Container>
     </Cover>
   );
 }
 
-export default Login;
+export default PageNotFound;

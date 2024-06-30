@@ -8,18 +8,26 @@ const StyledTable = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  /* width: 100%; */
 `;
 
 const StyledFilter = styled.div`
   padding: 1rem 1.5rem;
   background-color: var(--cl-bg-white);
   border-radius: var(--radius-normal);
-  flex-grow: 0;
+
+  overflow: auto;
+  width: 100%;
+  /* border: 1px solid green; */
 
   display: flex;
   align-items: center;
   justify-content: end;
   gap: 1rem;
+
+  @media (max-width: 37.5em) {
+    justify-content: unset;
+  }
 
   > * {
     flex-shrink: 0;
@@ -43,9 +51,15 @@ const StyledContent = styled.div`
   background-color: var(--cl-bg-white);
   border-radius: var(--radius-normal);
   flex-grow: 1;
+  overflow: auto;
+  width: 100%;
 
   display: flex;
   flex-direction: column;
+
+  > * {
+    min-width: 800px;
+  }
 `;
 
 const StyledHead = styled.div`
@@ -62,7 +76,7 @@ const StyledHead = styled.div`
 const StyledBody = styled.div`
   overflow-y: auto;
   flex-grow: 1;
-  height: 20rem;
+  height: 30rem;
 
   &::-webkit-scrollbar {
     appearance: none;

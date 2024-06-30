@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Cover = styled.div`
   width: 100%;
-  max-width: 1300px;
+  max-width: 1400px;
   height: 100vh;
   height: 100dvh;
   margin-inline: auto;

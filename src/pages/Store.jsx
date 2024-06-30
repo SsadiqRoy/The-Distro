@@ -5,6 +5,7 @@ const StyledMain = styled.main`
   width: 100%;
   height: 10rem;
   flex-grow: 1;
+  padding-right: 1.5rem;
 
   overflow: auto;
   display: grid;

@@ -58,7 +58,7 @@ function SupplyItem({ number }) {
         <>
           <span></span>
           <Button $color="green" $outlined={true} $size="small">
-            approve
+            accept
           </Button>
         </>
       )}
@@ -80,7 +80,7 @@ function SupplyItem({ number }) {
             cancel
           </Button>
           <Button $color="green" $outlined={true} $size="small">
-            approve
+            accept
           </Button>
         </>
       )}

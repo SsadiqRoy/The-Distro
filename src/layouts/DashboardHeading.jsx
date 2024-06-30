@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FaRegMoon } from "react-icons/fa6";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
 import { LuLogIn, LuSun } from "react-icons/lu";
+import { RiMenuUnfold3Line } from "react-icons/ri";
 import { SiDatabricks } from "react-icons/si";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { useResponsive } from "../context/Responsive";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -32,6 +34,14 @@ const StyledHeader = styled.header`
     }
   }
 
+  .menu {
+    display: none;
+
+    @media (max-width: 68.75em) {
+      display: initial;
+    }
+  }
+
   .header-left {
     display: flex;
     align-items: center;
@@ -44,24 +54,25 @@ const StyledHeader = styled.header`
 `;
 
 function DashboardHeading() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { isDarkMode, setDarkMode, setOpenSidebar } = useResponsive();
 
   useEffect(() => {
     const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setIsDarkMode(dark);
-  }, [setIsDarkMode]);
+    setDarkMode(dark);
+  }, [setDarkMode]);
 
   //
   useEffect(() => {
-    window
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (e) => setIsDarkMode(e.matches));
-  }, [setIsDarkMode]);
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => setDarkMode(e.matches));
+  }, [setDarkMode]);
 
   return (
     <StyledHeader>
       <div className="header-left">
         <div className="header-icons">
+          <div className="menu" onClick={() => setOpenSidebar(true)}>
+            <RiMenuUnfold3Line />
+          </div>
           <NavLink to="/store">
             <HiOutlineBuildingStorefront title="Store" />
           </NavLink>
@@ -74,11 +85,7 @@ function DashboardHeading() {
 
       <div className="header-right">
         <div className="header-icons">
-          {isDarkMode ? (
-            <LuSun title="Light Mode" />
-          ) : (
-            <FaRegMoon title="Dark Mode" />
-          )}
+          {isDarkMode ? <LuSun title="Light Mode" /> : <FaRegMoon title="Dark Mode" />}
 
           <NavLink to="/login">
             <LuLogIn title="Login" />

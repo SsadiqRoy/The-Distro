@@ -89,11 +89,12 @@ const GlobalStyle = createGlobalStyle`
 }
 *::-webkit-scrollbar-track {
   background-color: var(--cl-bg);
+  border-radius: var(--radius-normal);
 }
 *::-webkit-scrollbar-thumb {
   background-color: var(--cl-bg-light);
   border-radius: 100px;
-  border: 4px solid var(--cl-bg);
+  border: 6px solid var(--cl-bg);
 }
 
 html {
