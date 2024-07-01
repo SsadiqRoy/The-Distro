@@ -1,4 +1,5 @@
-// import '../src/styles/style.css';
+/* eslint-disable */
+
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -7,6 +8,7 @@ import { Suspense, lazy } from "react";
 import GlobalStyle from "./styles/globalStyles";
 import PageNotFound from "./pages/PageNotFound";
 import { SpinnerFullPage } from "./components/elementComponents";
+import Responsive from "./context/Responsive";
 
 const DashboardLayout = lazy(() => import("./layouts/DashboardLayout"));
 const ClientLayout = lazy(() => import("./layouts/ClientLayout"));
@@ -32,27 +34,29 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
 
-          <BrowserRouter>
-            <Routes>
-              <Route element={<ClientLayout />}>
-                <Route index element={<Navigate to="store" replace />} />
-                <Route path="store" element={<Store />} />
-                <Route path="supplier" element={<Supplier />} />
-              </Route>
+          <Responsive>
+            <BrowserRouter>
+              <Routes>
+                <Route element={<ClientLayout />}>
+                  <Route index element={<Navigate to="store" replace />} />
+                  <Route path="store" element={<Store />} />
+                  <Route path="supplier" element={<Supplier />} />
+                </Route>
 
-              <Route element={<DashboardLayout />}>
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="purchases" element={<Purchases />} />
-                <Route path="supplies" element={<Supplies />} />
-                <Route path="supplies/:filter" element={<Supplies />} />
-                <Route path="Products" element={<Products />} />
-                <Route path="profile" element={<Profile />} />
-              </Route>
+                <Route element={<DashboardLayout />}>
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="purchases" element={<Purchases />} />
+                  <Route path="supplies" element={<Supplies />} />
+                  <Route path="supplies/:filter" element={<Supplies />} />
+                  <Route path="Products" element={<Products />} />
+                  <Route path="profile" element={<Profile />} />
+                </Route>
 
-              <Route path="login" element={<Login />} />
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
-          </BrowserRouter>
+                <Route path="login" element={<Login />} />
+                <Route path="*" element={<PageNotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </Responsive>
         </QueryClientProvider>
       </Suspense>
     </>

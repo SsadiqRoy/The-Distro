@@ -1,10 +1,14 @@
 import styled, { css } from "styled-components";
+import { useResponsive } from "../context/Responsive";
 
-export const ButtonPrimary = styled.button`
-  --cl-btn-bg: var(--cl-secondary);
-  @media (prefers-color-scheme: dark) {
-    --cl-btn-bg: var(--cl-bg-light);
-  }
+const StyledButtonPrimary = styled.button`
+  --cl-btn-bg: var(--cl-secondary-light);
+
+  ${(p) =>
+    p.$darkMode &&
+    css`
+      --cl-btn-bg: var(--cl-bg-light);
+    `}
 
   width: 100%;
   padding: 1rem 2rem;
@@ -23,6 +27,11 @@ export const ButtonPrimary = styled.button`
     outline-offset: 2px;
   }
 `;
+export function ButtonPrimary({ children }) {
+  const { isDarkMode } = useResponsive();
+
+  return <StyledButtonPrimary $darkMode={isDarkMode}>{children}</StyledButtonPrimary>;
+}
 
 export const ButtonPrimaryDark = styled.button`
   width: 100%;
@@ -40,7 +49,17 @@ export const ButtonPrimaryDark = styled.button`
   background-color: var(--cl-secondary);
 `;
 
-export const ButtonPrimaryMini = styled.button`
+const StyledButtonPrimaryMini = styled.button`
+  --cl-btn: var(--cl-primary);
+  --cl-btn-bg: var(--cl-secondary-light);
+
+  ${(p) =>
+    p.$darkMode &&
+    css`
+      --cl-btn: var(--cl-secondary);
+      --cl-btn-bg: var(--cl-primary);
+    `}
+
   padding-inline: 2px;
   text-align: center;
   text-transform: capitalize;
@@ -53,14 +72,14 @@ export const ButtonPrimaryMini = styled.button`
   cursor: pointer;
   text-align: center;
 
-  color: var(--cl-primary);
-  background-color: var(--cl-secondary);
-
-  @media (prefers-color-scheme: dark) {
-    color: var(--cl-secondary);
-    background-color: var(--cl-primary);
-  }
+  color: var(--cl-btn);
+  background-color: var(--cl-btn-bg);
 `;
+export function ButtonPrimaryMini({ children }) {
+  const { isDarkMode } = useResponsive();
+
+  return <StyledButtonPrimaryMini $darkMode={isDarkMode}> {children}</StyledButtonPrimaryMini>;
+}
 
 //
 
@@ -100,7 +119,7 @@ const buttonStyles = {
     `,
   },
 };
-export const Button = styled.button`
+export const StyledButton = styled.button`
   padding: 1rem 2rem;
   font-family: var(--font-bold);
 
@@ -147,12 +166,13 @@ export const Button = styled.button`
     `}
   ${(props) => props.$size === "small" && props.$shape !== "round" && "border-radius: var(--radius-small);"}
 `;
-Button.defaultProps = {
-  $color: "blue",
-  $outlined: false,
-  $shape: "round",
-  $size: "normal",
-};
+export function Button({ children, $color = "blue", $outlined = false, $shape = "round", $size = "normal" }) {
+  return (
+    <StyledButton $color={$color} $outlined={$outlined} $shape={$shape} $size={$size}>
+      {children}
+    </StyledButton>
+  );
+}
 
 //
 
@@ -185,6 +205,7 @@ export const FormInput = styled.input`
       font-family: var(--font-semibold);
       padding: 1rem 2rem;
       margin-right: 2rem;
+      color: var(--cl-text);
 
       @media (prefers-color-scheme: dark) {
         background-color: var(--cl-bg-light);

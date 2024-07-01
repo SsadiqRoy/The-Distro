@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { FaRegMoon } from "react-icons/fa6";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
 import { LuLogIn, LuSun } from "react-icons/lu";
@@ -54,17 +53,15 @@ const StyledHeader = styled.header`
 `;
 
 function DashboardHeading() {
-  const { isDarkMode, setDarkMode, setOpenSidebar } = useResponsive();
-
-  useEffect(() => {
-    const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setDarkMode(dark);
-  }, [setDarkMode]);
+  const { isDarkMode, toggleDarkMode, setOpenSidebar } = useResponsive();
 
   //
-  useEffect(() => {
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => setDarkMode(e.matches));
-  }, [setDarkMode]);
+
+  const colorThemeIcon = isDarkMode ? (
+    <LuSun title="Light Mode" onClick={toggleDarkMode} />
+  ) : (
+    <FaRegMoon title="Dark Mode" onClick={toggleDarkMode} />
+  );
 
   return (
     <StyledHeader>
@@ -85,7 +82,7 @@ function DashboardHeading() {
 
       <div className="header-right">
         <div className="header-icons">
-          {isDarkMode ? <LuSun title="Light Mode" /> : <FaRegMoon title="Dark Mode" />}
+          {colorThemeIcon}
 
           <NavLink to="/login">
             <LuLogIn title="Login" />

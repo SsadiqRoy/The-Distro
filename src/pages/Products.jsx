@@ -50,16 +50,16 @@ function Products() {
 
           <Table.Body>
             {Array.from({ length: 4 }).map((item, i) => (
-              <ProductItem key={i} color={i + 1} />
+              <ProductItem key={i + 4} color={i + 1} />
             ))}
             {Array.from({ length: 4 }).map((item, i) => (
-              <ProductItem key={i} color={i + 1} />
+              <ProductItem key={i + 8} color={i + 1} />
             ))}
             {Array.from({ length: 4 }).map((item, i) => (
-              <ProductItem key={i} color={i + 1} />
+              <ProductItem key={i + 12} color={i + 1} />
             ))}
             {Array.from({ length: 4 }).map((item, i) => (
-              <ProductItem key={i} color={i + 1} />
+              <ProductItem key={i + 16} color={i + 1} />
             ))}
           </Table.Body>
 

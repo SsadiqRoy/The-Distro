@@ -84,7 +84,7 @@ function SupplierItem({ id }) {
         </Modal.Window>
       </Modal>
 
-      <span></span>
+      <seperatebuttons></seperatebuttons>
       <Button>approve</Button>
     </StyledSupplierItem>
   );

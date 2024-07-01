@@ -1,39 +1,39 @@
 @font-face {
-  font-family: 'mulish light';
+  font-family: "mulish light";
   src: url(/public/fonts/Mulish-Light.ttf);
 }
 @font-face {
-  font-family: 'mulish regular';
+  font-family: "mulish regular";
   src: url(/public/fonts/Mulish-Regular.ttf);
 }
 
 @font-face {
-  font-family: 'mulish medium';
+  font-family: "mulish medium";
   src: url(/public/fonts/Mulish-Medium.ttf);
 }
 
 @font-face {
-  font-family: 'mulish semibold';
+  font-family: "mulish semibold";
   src: url(/public/fonts/Mulish-SemiBold.ttf);
 }
 
 @font-face {
-  font-family: 'mulish bold';
+  font-family: "mulish bold";
   src: url(/public/fonts/Mulish-Bold.ttf);
 }
 
 @font-face {
-  font-family: 'mulish black';
+  font-family: "mulish black";
   src: url(/public/fonts/Mulish-Black.ttf);
 }
 
 :root {
-  --font-light: 'mulish light';
-  --font-regular: 'mulish regular';
-  --font-medium: 'mulish medium';
-  --font-semibold: 'mulish semibold';
-  --font-bold: 'mulish bold';
-  --font-black: 'mulish black';
+  --font-light: "mulish light";
+  --font-regular: "mulish regular";
+  --font-medium: "mulish medium";
+  --font-semibold: "mulish semibold";
+  --font-bold: "mulish bold";
+  --font-black: "mulish black";
 
   --color-primary: #fcd535;
   --color-primary-dark: #f1be06;
@@ -44,6 +44,8 @@
   --color-background: #e6ecf3;
   --color-background-light: #f6faff;
   --color-secondary: #1e2329;
+  --color-secondary: #d6dde5;
+  --color-secondary-light: #222b38;
   --color-secondary-light: #48525e;
   --color-danger: #df3f2a;
   --color-blue: #2e8bf9;

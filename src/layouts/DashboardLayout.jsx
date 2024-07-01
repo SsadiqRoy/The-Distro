@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import DashboardHeading from "./DashboardHeading";
 import styled from "styled-components";
 import DashboarSidebar from "./DashboarSidebar";
-import Responsive from "../context/Responsive";
 
 const Cover = styled.div`
   width: 100%;
@@ -53,14 +52,12 @@ function DashboardLayout() {
   return (
     <Cover>
       <Container>
-        <Responsive>
-          <DashboarSidebar />
+        <DashboarSidebar />
 
-          <Main>
-            <DashboardHeading />
-            <Outlet />
-          </Main>
-        </Responsive>
+        <Main>
+          <DashboardHeading />
+          <Outlet />
+        </Main>
       </Container>
     </Cover>
   );

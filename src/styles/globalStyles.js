@@ -46,8 +46,8 @@ const GlobalStyle = createGlobalStyle`
   --cl-primary: #f1be06;
   --cl-primary-opacity: #f1be0640;
   --cl-primary-light: #fcd535;
-  --cl-secondary: #1E2329;
-  --cl-secondary-light: #48525E;
+  --cl-secondary: #1b222c;
+  --cl-secondary-light: #212935;
   --cl-white: #FFFFFF;
   
   --cl-danger: #DF3F2A;
@@ -60,18 +60,23 @@ const GlobalStyle = createGlobalStyle`
   --cl-product-4: #F63D68;
   --cl-product-5: #6172F3;
 
+
   --cl-txt:#1E2329;
   --cl-bg: #E6ECF3;
   --cl-bg-light: #F6FAFF;
   --cl-bg-white: #FFFFFF;
   --cl-border: #E6ECF3;
   --cl-border-opacity: #E6ECF390;
+
+  --cl-bg: #d6dde5;
+  --cl-bg-light: #E6ECF3;
+  --cl-bg-white: #F6FAFF;
   
-  @media(prefers-color-scheme: dark){
+  &.dark{
     --cl-txt:#E3E3E3;
-    --cl-bg: #1E2329;
-    --cl-bg-light: #48525E;
-    --cl-bg-white: #1E2329;
+    --cl-bg: #212935;
+    --cl-bg-white: #222b38;
+    --cl-bg-light: #1b222c;
     --cl-border: #48525E;
     --cl-border-opacity: #48525E40;
   }

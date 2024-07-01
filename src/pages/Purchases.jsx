@@ -17,16 +17,16 @@ function Purchases() {
             <PurchaseItem key={i} number={5} />
           ))}
           {Array.from({ length: 3 }).map((item, i) => (
-            <PurchaseItem key={i} number={1} />
+            <PurchaseItem key={i + 3} number={1} />
           ))}
           {Array.from({ length: 3 }).map((item, i) => (
-            <PurchaseItem key={i} number={2} />
+            <PurchaseItem key={i + 6} number={2} />
           ))}
           {Array.from({ length: 3 }).map((item, i) => (
-            <PurchaseItem key={i} number={3} />
+            <PurchaseItem key={i + 9} number={3} />
           ))}
           {Array.from({ length: 3 }).map((item, i) => (
-            <PurchaseItem key={i} number={4} />
+            <PurchaseItem key={i + 12} number={4} />
           ))}
         </Table.Body>
 

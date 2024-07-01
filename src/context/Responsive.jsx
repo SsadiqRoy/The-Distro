@@ -1,16 +1,40 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { COLOR_MODE_LOCALSTROGE_KEY } from "../utilities/variables";
 
 const Context = createContext();
 
 function Responsive({ children }) {
   const [isOpenSidebar, setOpenSidebar] = useState(false);
-  const [isDarkMode, setDarkMode] = useState(false);
+  const [isDarkMode, setDarkMode] = useState(() => {
+    let isDark = localStorage.getItem(COLOR_MODE_LOCALSTROGE_KEY);
+    if (isDark) return JSON.parse(isDark);
+
+    isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    console.log(isDark, "after local storage check");
+    return isDark;
+  });
+
+  const toggleDarkMode = () => setDarkMode((dark) => !dark);
+
+  useEffect(() => {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => setDarkMode(e.matches));
+  }, [setDarkMode]);
+
+  useEffect(() => {
+    const currentTheme = isDarkMode ? "dark" : "light";
+    const notCurrenTheme = isDarkMode ? "light" : "dark";
+
+    document.querySelector("html").classList.remove(notCurrenTheme);
+    document.querySelector("html").classList.add(currentTheme);
+
+    localStorage.setItem(COLOR_MODE_LOCALSTROGE_KEY, JSON.stringify(isDarkMode));
+  }, [isDarkMode]);
 
   const value = {
     isOpenSidebar,
     setOpenSidebar,
     isDarkMode,
-    setDarkMode,
+    toggleDarkMode,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

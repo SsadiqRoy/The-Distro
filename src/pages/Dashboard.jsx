@@ -300,7 +300,7 @@ function Dashboard() {
                 paddingAngle={2}
               >
                 {profitShare.map((d) => (
-                  <Cell fill={d.color} stroke={d.color} />
+                  <Cell key={d.color} fill={d.color} stroke={d.color} />
                 ))}
               </Pie>
             </PieChart>
@@ -312,7 +312,7 @@ function Dashboard() {
             <PieChart width="100%" height="100%">
               <Pie data={profitShare} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={90} fill="color">
                 {profitShare.map((d) => (
-                  <Cell fill={d.color} stroke={d.color} />
+                  <Cell key={d.name} fill={d.color} stroke={d.color} />
                 ))}
               </Pie>
             </PieChart>
@@ -368,7 +368,7 @@ function Dashboard() {
               <PurchaseItem key={i} number={5} />
             ))}
             {Array.from({ length: 3 }).map((item, i) => (
-              <PurchaseItem key={i} number={1} />
+              <PurchaseItem key={i + 3} number={1} />
             ))}
           </Table.Body>
         </Table.Window>
@@ -414,8 +414,8 @@ function ShareItem({ children, data, datakey, title }) {
       </div>
 
       <div>
-        {data.map((item) => (
-          <ShareIndicator name={item[datakey]} color={item.color} />
+        {data.map((item, i) => (
+          <ShareIndicator key={i} name={item[datakey]} color={item.color} />
         ))}
       </div>
     </StyledShareItem>

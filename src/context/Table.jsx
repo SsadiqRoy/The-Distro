@@ -131,7 +131,7 @@ function Filter({ filters }) {
   return (
     <StyledFilter>
       {filters.map((filter) => (
-        <span className={active === filter && "active"} onClick={() => setFilter(filter)} key={filter}>
+        <span className={active === filter ? "active" : ""} onClick={() => setFilter(filter)} key={filter}>
           {filter}
         </span>
       ))}
@@ -147,7 +147,7 @@ function Head({ labels, gridColumn }) {
   return (
     <StyledHead $gridColumn={gridColumn}>
       {labels.map((label) => (
-        <span>{label}</span>
+        <span key={label}>{label}</span>
       ))}
     </StyledHead>
   );
