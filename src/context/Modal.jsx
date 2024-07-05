@@ -101,19 +101,24 @@ function Open({ children, openId }) {
 }
 
 //
-function Window({ children, title, id }) {
+function Window({ children, title, id, afterClose, beforeOpen }) {
   const { openId, close } = useContext(ModalContext);
 
   const clickOutside = function (e) {
     const cover = e.target.closest(".modal-cover");
-    !cover && close();
+    if (!cover) {
+      close();
+      afterClose?.();
+    }
   };
 
   if (id !== openId) return;
 
+  beforeOpen?.();
+
   const modal = (
     <StyledWindow onClick={clickOutside}>
-      <div className="modal-cover">
+      <div className="modal-cover" id={id}>
         <div className="modal-container">
           <div className="modal-heading">
             <h3 className="center-element">{title}</h3>
@@ -147,5 +152,11 @@ Modal.Open = Open;
 Modal.Window = Window;
 Modal.Content = Content;
 Modal.Footer = Footer;
+
+export function useModal() {
+  const context = useContext(ModalContext);
+  if (!context) throw new Error("useModal is called outsid Modal provider");
+  return context;
+}
 
 export default Modal;

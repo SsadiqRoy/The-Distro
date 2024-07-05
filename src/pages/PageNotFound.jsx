@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { ButtonPrimary } from "../components/elements";
+import { ButtonPrimary } from "../components/elementComponents";
 
 const Cover = styled.div`
   width: 100%;

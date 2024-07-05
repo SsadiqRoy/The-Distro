@@ -6,6 +6,8 @@ import { PiNotepadBold } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { useResponsive } from "../context/Responsive";
+import { useAdminCtx } from "../context/OnlyLoggedIn";
+import { IMAGE_URL } from "../utilities/variables";
 
 const StyledSidebar = styled.aside`
   width: 100%;
@@ -21,7 +23,7 @@ const StyledSidebar = styled.aside`
   transition: all 0.5s ease;
 
   @media (max-width: 68.75em) {
-    max-width: 25rem;
+    max-width: 27rem;
     position: absolute;
     z-index: 15;
     left: 0;
@@ -100,13 +102,14 @@ const StyledSidebar = styled.aside`
 
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
 
     &-image {
       width: 5rem;
       height: 5rem;
       border-radius: 50%;
       overflow: hidden;
+      flex-shrink: 0;
 
       img {
         height: 100%;
@@ -130,6 +133,7 @@ const StyledSidebar = styled.aside`
 
 function DashboarSidebar() {
   const { isOpenSidebar, setOpenSidebar } = useResponsive();
+  const { admin } = useAdminCtx();
 
   const closeSidebar = () => setOpenSidebar(false);
 
@@ -178,10 +182,12 @@ function DashboarSidebar() {
 
       <NavLink to="/profile" className="sidebar-bottom" onClick={closeSidebar}>
         <div className="sidebar-bottom-image">
-          <img src="/images/profile-image.jpg" alt="The Distro Logo" />
+          <img src={`${IMAGE_URL}/admins/${admin.image}`} alt={admin.fullname} />
         </div>
         <div className="sidebar-bottom-detail">
-          <strong>Mercy Asafua</strong>
+          <strong>
+            {admin.otherNames} {admin.surname}
+          </strong>
           <p>Administrator</p>
         </div>
       </NavLink>

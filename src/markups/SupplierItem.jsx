@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Modal from "../context/Modal";
-import { Button, ButtonPrimary } from "../components/elements";
-import { FormGroup } from "../components/elementComponents";
+import { Button, ButtonPrimary, FormGroup } from "../components/elementComponents";
 
 const StyledSupplierItem = styled.div`
   width: 100%;

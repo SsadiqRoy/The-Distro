@@ -170,6 +170,10 @@ ul{
 .opacity-5{
   opacity: 0.5;
 }
+
+.display-off{
+  display: 'none';
+}
 `;
 
 export default GlobalStyle;

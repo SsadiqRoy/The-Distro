@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-import { Button } from "../components/elements";
-import { FormGroup } from "../components/elementComponents";
+import { Button, FormGroup } from "../components/elementComponents";
 import Table from "../context/Table";
 import Modal from "../context/Modal";
 import ProductItem from "../markups/ProductItem";

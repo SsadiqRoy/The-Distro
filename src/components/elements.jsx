@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
-import { useResponsive } from "../context/Responsive";
 
-const StyledButtonPrimary = styled.button`
+export const StyledButtonPrimary = styled.button`
   --cl-btn-bg: var(--cl-secondary-light);
 
   ${(p) =>
@@ -27,11 +26,6 @@ const StyledButtonPrimary = styled.button`
     outline-offset: 2px;
   }
 `;
-export function ButtonPrimary({ children }) {
-  const { isDarkMode } = useResponsive();
-
-  return <StyledButtonPrimary $darkMode={isDarkMode}>{children}</StyledButtonPrimary>;
-}
 
 export const ButtonPrimaryDark = styled.button`
   width: 100%;
@@ -49,7 +43,7 @@ export const ButtonPrimaryDark = styled.button`
   background-color: var(--cl-secondary);
 `;
 
-const StyledButtonPrimaryMini = styled.button`
+export const StyledButtonPrimaryMini = styled.button`
   --cl-btn: var(--cl-primary);
   --cl-btn-bg: var(--cl-secondary-light);
 
@@ -75,11 +69,6 @@ const StyledButtonPrimaryMini = styled.button`
   color: var(--cl-btn);
   background-color: var(--cl-btn-bg);
 `;
-export function ButtonPrimaryMini({ children }) {
-  const { isDarkMode } = useResponsive();
-
-  return <StyledButtonPrimaryMini $darkMode={isDarkMode}> {children}</StyledButtonPrimaryMini>;
-}
 
 //
 
@@ -166,13 +155,6 @@ export const StyledButton = styled.button`
     `}
   ${(props) => props.$size === "small" && props.$shape !== "round" && "border-radius: var(--radius-small);"}
 `;
-export function Button({ children, $color = "blue", $outlined = false, $shape = "round", $size = "normal" }) {
-  return (
-    <StyledButton $color={$color} $outlined={$outlined} $shape={$shape} $size={$size}>
-      {children}
-    </StyledButton>
-  );
-}
 
 //
 
@@ -192,6 +174,11 @@ export const FormInput = styled.input`
   &:focus {
     outline: 2px solid var(--cl-border);
     outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 
   &[type="file"] {
@@ -232,9 +219,48 @@ export const InputLabel = styled.label`
   text-transform: capitalize;
   margin-bottom: 0.5rem;
   display: block;
+
+  span {
+    color: var(--cl-danger);
+    font-size: 1.4rem;
+    font-weight: normal;
+    display: inline-block;
+    margin-left: 1rem;
+  }
 `;
 
 export const ColoredText = styled.p`
   display: inline-block;
   ${(props) => `color: var(--cl-${props.$color || "secondary"})`}
+`;
+
+//
+
+export const StyledSpinnerFullPage = styled.div`
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  background-color: var(--cl-bg);
+`;
+
+export const StyledSpinner = styled.div`
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > * {
+    animation: loading 1s linear infinite;
+    color: #f1be06;
+    font-size: 4rem;
+  }
+
+  @keyframes loading {
+    to {
+      transform: rotate(1turn);
+    }
+  }
 `;

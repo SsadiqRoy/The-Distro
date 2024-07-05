@@ -2,9 +2,10 @@ import { FaRegMoon } from "react-icons/fa6";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
 import { LuLogIn, LuSun } from "react-icons/lu";
 import { SiDatabricks } from "react-icons/si";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useResponsive } from "../context/Responsive";
+import { TbLayoutDashboard } from "react-icons/tb";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -45,6 +46,7 @@ const StyledHeader = styled.header`
 
 function ClientHeader() {
   const { isDarkMode, toggleDarkMode } = useResponsive();
+  const navigate = useNavigate();
 
   const colorThemeIcon = isDarkMode ? (
     <LuSun title="Light Mode" onClick={toggleDarkMode} />
@@ -71,11 +73,13 @@ function ClientHeader() {
 
       <div className="header-right">
         <div className="header-icons">
+          <TbLayoutDashboard title="Dashboard" onClick={() => navigate("/dashboard")} />
+          {/* <NavLink to="/dashboard"></NavLink> */}
+
           {colorThemeIcon}
 
-          <NavLink to="/login">
-            <LuLogIn title="Login" />
-          </NavLink>
+          <LuLogIn title="Login" onClick={() => navigate("/login")} />
+          {/* <NavLink to="/login"></NavLink> */}
         </div>
       </div>
     </StyledHeader>

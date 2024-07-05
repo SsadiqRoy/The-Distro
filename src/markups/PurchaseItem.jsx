@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Button, ColoredText } from "../components/elements";
+import { ColoredText } from "../components/elements";
+import { Button } from "../components/elementComponents";
 
 const StyledPurchaseItem = styled.div`
   padding: 1rem;

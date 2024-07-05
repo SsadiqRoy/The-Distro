@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ButtonPrimary, ButtonPrimaryMini } from "../components/elements";
+import { ButtonPrimary, ButtonPrimaryMini } from "../components/elementComponents";
 
 const StyledStoreItem = styled.div`
   background-color: var(--cl-bg-white);

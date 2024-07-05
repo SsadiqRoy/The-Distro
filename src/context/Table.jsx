@@ -1,8 +1,9 @@
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+import { Button } from "../components/elementComponents";
 
-import { Button } from "../components/elements";
+// import { Button } from "../components/elements";
 
 const StyledTable = styled.div`
   display: flex;

@@ -6,6 +6,8 @@ import { SiDatabricks } from "react-icons/si";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { useResponsive } from "../context/Responsive";
+import { useLogout } from "../hooks/adminHooks";
+import { Spinner } from "../components/elementComponents";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -54,8 +56,13 @@ const StyledHeader = styled.header`
 
 function DashboardHeading() {
   const { isDarkMode, toggleDarkMode, setOpenSidebar } = useResponsive();
+  const { logOut, logingOut } = useLogout();
 
   //
+
+  function handleLogout() {
+    logOut();
+  }
 
   const colorThemeIcon = isDarkMode ? (
     <LuSun title="Light Mode" onClick={toggleDarkMode} />
@@ -84,9 +91,13 @@ function DashboardHeading() {
         <div className="header-icons">
           {colorThemeIcon}
 
-          <NavLink to="/login">
-            <LuLogIn title="Login" />
-          </NavLink>
+          {logingOut ? (
+            <span style={{ width: "2rem", height: "2rem" }}>
+              <Spinner />
+            </span>
+          ) : (
+            <LuLogIn title="Login" onClick={handleLogout} />
+          )}
         </div>
       </div>
     </StyledHeader>

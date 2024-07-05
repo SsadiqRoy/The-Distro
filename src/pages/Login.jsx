@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import { ButtonPrimary } from "../components/elements";
-import { FormGroup } from "../components/elementComponents";
+import { FormInput, InputLabel } from "../components/elements";
+import { ButtonPrimary, FormGroupFree } from "../components/elementComponents";
 import { NavLink } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useLogin } from "../hooks/adminHooks";
+import { validateEmail } from "../utilities/utilities";
 
 const Cover = styled.div`
   width: 100%;
@@ -74,6 +77,21 @@ const StyledForm = styled.form`
 `;
 
 function Login() {
+  const defaultValues = { email: "ssadiqueroy@mailsac.com", password: "test1234" };
+
+  const { register, handleSubmit, formState, reset } = useForm({ defaultValues });
+  const { mutate, isPending } = useLogin();
+
+  const { errors } = formState;
+
+  function handleLogin({ email, password }) {
+    mutate({ email, password });
+    reset();
+  }
+
+  const registerEmail = register("email", { required: "enter your email", validate: validateEmail });
+  const registerPassword = register("password", { required: "enter you password" });
+
   return (
     <Cover>
       <Container>
@@ -82,16 +100,28 @@ function Login() {
             <img src="/images/distro-logo.svg" alt="The Distro Logo" />
           </NavLink>
 
-          <StyledForm>
+          <StyledForm onSubmit={handleSubmit(handleLogin)}>
             <div className="center-element">
               <h1>Log In</h1>
             </div>
-            <FormGroup lable="email" id="email" type="email" />
-            <FormGroup lable="password" id="password" type="password" />
 
-            <NavLink to="/dashboard">
-              <ButtonPrimary type="button">Log In</ButtonPrimary>
-            </NavLink>
+            <FormGroupFree>
+              <InputLabel htmlFor="email">
+                email <span>{errors?.email?.message}</span>
+              </InputLabel>
+              <FormInput disabled={isPending} id="email" type="email" {...registerEmail} />
+            </FormGroupFree>
+
+            <FormGroupFree>
+              <InputLabel htmlFor="password">
+                password <span>{errors?.password?.message}</span>
+              </InputLabel>
+              <FormInput disabled={isPending} id="password" type="password" {...registerPassword} />
+            </FormGroupFree>
+
+            <ButtonPrimary type="submit" disabled={isPending}>
+              Log In
+            </ButtonPrimary>
           </StyledForm>
         </Content>
       </Container>

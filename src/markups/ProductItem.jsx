@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { FiEdit, FiSend } from "react-icons/fi";
 
 import Modal from "../context/Modal";
-import { ButtonPrimary, ColoredText } from "../components/elements";
-import { FormGroup } from "../components/elementComponents";
+import { ColoredText } from "../components/elements";
+import { ButtonPrimary, FormGroup } from "../components/elementComponents";
 
 const StyledProductItem = styled.div`
   padding: 1rem;
@@ -88,9 +88,9 @@ function ProductItem({ color }) {
                 <p>Lumber Jack Boots</p>
                 <strong>78.00</strong>
                 <FormGroup textAlign="center" />
-                <p>
+                <div>
                   $31.00 - <ColoredText $color="green">35%</ColoredText>
-                </p>
+                </div>
               </ChangePriceContent>
             </Modal.Content>
             <Modal.Footer>
