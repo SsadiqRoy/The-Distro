@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { COLOR_MODE_LOCALSTROGE_KEY } from "../utilities/variables";
+import { getCurrentPage } from "../utilities/utilities";
 
 const Context = createContext();
 
 function Responsive({ children }) {
   const [isOpenSidebar, setOpenSidebar] = useState(false);
+  const [currentPage, setCurrentPage] = useState(getCurrentPage());
   const [isDarkMode, setDarkMode] = useState(() => {
     let isDark = localStorage.getItem(COLOR_MODE_LOCALSTROGE_KEY);
     if (isDark) return JSON.parse(isDark);
@@ -35,6 +37,8 @@ function Responsive({ children }) {
     setOpenSidebar,
     isDarkMode,
     toggleDarkMode,
+    currentPage,
+    setCurrentPage,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

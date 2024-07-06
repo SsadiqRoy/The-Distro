@@ -43,32 +43,37 @@ export function SpinnerFullPage() {
   );
 }
 
-export function Button({ children, data, onClick, disabled = false, $color = "blue", $outlined = false, $shape = "round", $size = "normal" }) {
+export function Button({ children, data, $color = "blue", $outlined = false, $shape = "round", $size = "normal", ...rest }) {
   return (
-    <StyledButton onClick={onClick} disabled={disabled} $color={$color} $outlined={$outlined} $shape={$shape} $size={$size}>
+    <StyledButton {...rest} $color={$color} $outlined={$outlined} $shape={$shape} $size={$size}>
       {children} {data}
     </StyledButton>
   );
 }
 
-export function ButtonPrimaryMini({ children, data, onClick, disabled = false }) {
+export function ButtonPrimaryMini({ children, data, ...rest }) {
   const { isDarkMode } = useResponsive();
 
   return (
-    <StyledButtonPrimaryMini onClick={onClick} $darkMode={isDarkMode} disabled={disabled}>
+    <StyledButtonPrimaryMini $darkMode={isDarkMode} {...rest}>
       {children}
       {data}
     </StyledButtonPrimaryMini>
   );
 }
 
-export function ButtonPrimary({ children, data, disabled = false, onClick }) {
+export function ButtonPrimary({ children, data, ...rest }) {
   const { isDarkMode } = useResponsive();
 
   return (
-    <StyledButtonPrimary onClick={onClick} $darkMode={isDarkMode} disabled={disabled}>
+    <StyledButtonPrimary $darkMode={isDarkMode} {...rest}>
       {children}
       {data}
     </StyledButtonPrimary>
   );
+}
+
+export function DisplayAltMessage({ message }) {
+  const style = { width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", textTransform: "capitalize" };
+  return <div style={style}>{message}</div>;
 }

@@ -3,13 +3,12 @@ import styled from "styled-components";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { Button } from "../components/elementComponents";
 
-// import { Button } from "../components/elements";
+//
 
 const StyledTable = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  /* width: 100%; */
 `;
 
 const StyledFilter = styled.div`
@@ -19,7 +18,6 @@ const StyledFilter = styled.div`
 
   overflow: auto;
   width: 100%;
-  /* border: 1px solid green; */
 
   display: flex;
   align-items: center;
@@ -158,7 +156,12 @@ function Body({ children }) {
   return <StyledBody>{children}</StyledBody>;
 }
 
-function Footer({ total, consumed, next, prev }) {
+function Footer({ total = 0, consumed = 0, next = 0, prev = 0, page = 1 }) {
+  const [, setSearchParams] = useSearchParams();
+
+  const handlePrev = () => setSearchParams((p) => ({ ...p, page: page - 1 }));
+  const handleNext = () => setSearchParams((p) => ({ ...p, page: page + 1 }));
+
   return (
     <StyledFooter>
       <p>
@@ -166,18 +169,36 @@ function Footer({ total, consumed, next, prev }) {
       </p>
 
       <div>
-        <Button $shape="square" $outlined={true} $size="small" $display="flex">
-          <span>
-            <HiChevronLeft />
-          </span>
-          prev
-        </Button>
-        <Button $shape="square" $outlined={true} $size="small" $display="flex">
-          next
-          <span>
-            <HiChevronRight />
-          </span>
-        </Button>
+        {prev ? (
+          <Button onClick={handlePrev} $shape="square" $outlined={true} $size="small" $display="flex">
+            <span>
+              <HiChevronLeft />
+            </span>
+            prev
+          </Button>
+        ) : (
+          <Button disabled={true} $shape="square" $outlined={true} $size="small" $display="flex">
+            <span>
+              <HiChevronLeft />
+            </span>
+            prev
+          </Button>
+        )}
+        {next ? (
+          <Button onClick={handleNext} $shape="square" $outlined={true} $size="small" $display="flex">
+            next
+            <span>
+              <HiChevronRight />
+            </span>
+          </Button>
+        ) : (
+          <Button disabled={true} $shape="square" $outlined={true} $size="small" $display="flex">
+            next
+            <span>
+              <HiChevronRight />
+            </span>
+          </Button>
+        )}
       </div>
     </StyledFooter>
   );

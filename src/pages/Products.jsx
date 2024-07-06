@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
-import { Button, FormGroup } from "../components/elementComponents";
+import { DisplayAltMessage, Spinner } from "../components/elementComponents";
 import Table from "../context/Table";
-import Modal from "../context/Modal";
 import ProductItem from "../markups/ProductItem";
+import { useGetProducts } from "../hooks/productHooks";
+import { useEffect, useState } from "react";
+import AddProduct from "../components/AddProduct";
 
 const StyledContent = styled.div`
   display: flex;
@@ -12,20 +14,6 @@ const StyledContent = styled.div`
 
   > :first-child {
     flex-grow: 1;
-  }
-`;
-
-const AddProductButton = styled.div`
-  text-align: right;
-`;
-
-const ModalContent = styled.form`
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-
-  button {
-    margin-top: 1rem;
   }
 `;
 
@@ -38,6 +26,15 @@ const ModalContent = styled.form`
 */
 
 function Products() {
+  const [products, setProducts] = useState([]);
+  const [meta, setMeta] = useState({});
+  const { data, isLoading } = useGetProducts();
+
+  useEffect(() => {
+    data && setProducts(data.data);
+    data && setMeta(data.meta);
+  }, [data]);
+
   return (
     <StyledContent>
       <Table>
@@ -48,50 +45,18 @@ function Products() {
           />
 
           <Table.Body>
-            {Array.from({ length: 4 }).map((item, i) => (
-              <ProductItem key={i + 4} color={i + 1} />
-            ))}
-            {Array.from({ length: 4 }).map((item, i) => (
-              <ProductItem key={i + 8} color={i + 1} />
-            ))}
-            {Array.from({ length: 4 }).map((item, i) => (
-              <ProductItem key={i + 12} color={i + 1} />
-            ))}
-            {Array.from({ length: 4 }).map((item, i) => (
-              <ProductItem key={i + 16} color={i + 1} />
+            {isLoading && <Spinner />}
+            {!isLoading && !meta.length && <DisplayAltMessage message="No results found" />}
+            {products.map((p) => (
+              <ProductItem product={p} key={p.id} />
             ))}
           </Table.Body>
 
-          <Table.Footer total={74} consumed={30} />
+          <Table.Footer total={meta.total} consumed={meta.consumed} prev={meta.previous} next={meta.available} page={meta.page} />
         </Table.Window>
       </Table>
 
-      <AddProductButton>
-        <Modal>
-          <Modal.Open openId="add-product">
-            <Button $shape="square">Add Product</Button>
-          </Modal.Open>
-
-          <Modal.Window id="add-product" title="add new product">
-            <Modal.Content>
-              <ModalContent>
-                <FormGroup lable="Name" id="name" />
-                <FormGroup lable="description" id="description" />
-                <FormGroup lable="color" id="color" type="color" />
-                <FormGroup lable="buying price" id="buying-price" type="number" />
-                <FormGroup lable="selling price" id="selling-price" type="number" />
-                <FormGroup lable="quantity" id="quantity" type="number" />
-              </ModalContent>
-            </Modal.Content>
-
-            <Modal.Footer>
-              <Button $size="large" $shape="square">
-                Add Product
-              </Button>
-            </Modal.Footer>
-          </Modal.Window>
-        </Modal>
-      </AddProductButton>
+      <AddProduct />
     </StyledContent>
   );
 }

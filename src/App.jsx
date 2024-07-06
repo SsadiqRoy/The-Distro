@@ -67,7 +67,7 @@ function App() {
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="purchases" element={<Purchases />} />
                     <Route path="supplies" element={<Supplies />} />
-                    <Route path="supplies/:filter" element={<Supplies />} />
+                    {/* <Route path="supplies/:filter" element={<Supplies />} /> */}
                     <Route path="Products" element={<Products />} />
                     <Route path="profile" element={<Profile />} />
                   </Route>

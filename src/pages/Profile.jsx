@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useUpdateAdmin, useUpdatePassword } from "../hooks/adminHooks";
 import { useForm } from "react-hook-form";
 import { FormInput, InputLabel } from "../components/elements";
-import AddNewAdmin from "../components/AddNewAdmin";
+import AddAdmin from "../components/AddAdmin";
 
 const StyledCotent = styled.div`
   width: 100%;
@@ -193,7 +193,7 @@ function Profile() {
         </div>
 
         <div>
-          <AddNewAdmin />
+          <AddAdmin />
         </div>
       </Password>
     </StyledCotent>

@@ -29,9 +29,14 @@ const TableHead = styled.div`
   align-items: center;
 `;
 
-function Supplier() {
-  console.log(window.location.pathname);
+/*
 
+
+
+
+*/
+
+function Supplier() {
   return (
     <StyledMain>
       <TableHead>

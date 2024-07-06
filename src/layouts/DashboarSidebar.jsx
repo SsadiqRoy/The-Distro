@@ -135,43 +135,51 @@ function DashboarSidebar() {
   const { isOpenSidebar, setOpenSidebar } = useResponsive();
   const { admin } = useAdminCtx();
 
-  const closeSidebar = () => setOpenSidebar(false);
+  // const closeSidebar = () => setOpenSidebar(false);
+
+  function onClickLink() {
+    setOpenSidebar(false);
+  }
 
   return (
     <StyledSidebar $isOpen={isOpenSidebar}>
       <div className="sidebar-top">
         <div className="sidebar-top-close">
-          <span onClick={closeSidebar}>
+          <span onClick={onClickLink}>
             <FaTimes />
           </span>
         </div>
         <div className="sidebar-top-logo">
-          <NavLink to="/" onClick={closeSidebar}>
+          <NavLink to="/" onClick={onClickLink}>
             <img src="/images/distro-logo.svg" alt="The Distro Logo" />
           </NavLink>
         </div>
         <div className="sidebar-pages">
           <ul>
             <li>
-              <NavLink to="/dashboard" onClick={closeSidebar}>
+              {/* <NavLink onClick={onClickLink}> */}
+              <NavLink to="/dashboard" onClick={onClickLink}>
                 <HiOutlineHome />
                 <span>Home</span>
               </NavLink>
             </li>
             <li>
-              <NavLink to="/purchases" onClick={closeSidebar}>
+              {/* <NavLink onClick={onClickLink}> */}
+              <NavLink to="/purchases" onClick={onClickLink}>
                 <BsCart4 />
                 <span>Purchases</span>
               </NavLink>
             </li>
             <li>
-              <NavLink to="/supplies" onClick={closeSidebar}>
+              {/* <NavLink onClick={onClickLink}> */}
+              <NavLink to="/supplies" onClick={onClickLink}>
                 <PiNotepadBold />
                 <span>Supplies</span>
               </NavLink>
             </li>
             <li>
-              <NavLink to="/products" onClick={closeSidebar}>
+              {/* <NavLink onClick={onClickLink}> */}
+              <NavLink to="/products" onClick={onClickLink}>
                 <FaCubesStacked />
                 <span>Products</span>
               </NavLink>
@@ -180,7 +188,8 @@ function DashboarSidebar() {
         </div>
       </div>
 
-      <NavLink to="/profile" className="sidebar-bottom" onClick={closeSidebar}>
+      {/* <NavLink className="sidebar-bottom" onClick={onClickLink}> */}
+      <NavLink to="/profile" className="sidebar-bottom" onClick={onClickLink}>
         <div className="sidebar-bottom-image">
           <img src={`${IMAGE_URL}/admins/${admin.image}`} alt={admin.fullname} />
         </div>

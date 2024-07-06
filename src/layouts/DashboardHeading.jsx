@@ -1,13 +1,16 @@
-import { FaRegMoon } from "react-icons/fa6";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
-import { LuLogIn, LuSun } from "react-icons/lu";
 import { RiMenuUnfold3Line } from "react-icons/ri";
-import { SiDatabricks } from "react-icons/si";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import { LuLogIn, LuSun } from "react-icons/lu";
+import { fromSearchString, getCurrentPage, toSearchString } from "../utilities/utilities";
 import { useResponsive } from "../context/Responsive";
+import { SiDatabricks } from "react-icons/si";
+import { FaRegMoon } from "react-icons/fa6";
 import { useLogout } from "../hooks/adminHooks";
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Spinner } from "../components/elementComponents";
+import styled from "styled-components";
+import { logout } from "../models/adminModel";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -54,11 +57,53 @@ const StyledHeader = styled.header`
   }
 `;
 
+const RangeInputs = styled.div`
+  display: flex;
+  gap: 1rem;
+
+  input {
+    background-color: transparent;
+    border: 2px solid var(--cl-border);
+    padding: 3px 5px;
+    border-radius: var(--radius-small);
+    color: var(--cl-text);
+  }
+`;
+
 function DashboardHeading() {
   const { isDarkMode, toggleDarkMode, setOpenSidebar } = useResponsive();
   const { logOut, logingOut } = useLogout();
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const navigator = useNavigate();
 
-  //
+  const excludeRangePages = ["profile"];
+  const currentPageActive = getCurrentPage();
+  const includes = excludeRangePages.includes(currentPageActive);
+
+  useEffect(() => {
+    let filter = window.location.search;
+
+    if (from) filter = filter ? `${filter}&createdAt[gte]=${from}` : `?createdAt[gte]=${from}`;
+    if (to) {
+      let newTo = new Date(to).getTime() + 86400000;
+      newTo = new Date(newTo).toISOString().split("T")[0];
+      filter = filter ? `${filter}&createdAt[lte]=${newTo}` : `?createdAt[lte]=${newTo}`;
+    }
+
+    if (filter) {
+      const filterObj = fromSearchString(filter);
+      const newfilter = toSearchString(filterObj);
+      const { pathname } = window.location;
+
+      const url = pathname + newfilter;
+      // console.log(url);
+      navigator(url);
+    }
+
+    // from && setSearchParams((p) => ({ ...p, "createdAt[gte]": from }));
+    // to && setSearchParams((p) => ({ ...p, "createdAt[lte]": to }));
+  }, [from, to, navigator]);
 
   function handleLogout() {
     logOut();
@@ -89,8 +134,14 @@ function DashboardHeading() {
 
       <div className="header-right">
         <div className="header-icons">
-          {colorThemeIcon}
+          {!includes && (
+            <RangeInputs>
+              <input type="date" value={from} onChange={(e) => setFrom(e.target.value)} />
+              <input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
+            </RangeInputs>
+          )}
 
+          {colorThemeIcon}
           {logingOut ? (
             <span style={{ width: "2rem", height: "2rem" }}>
               <Spinner />

@@ -60,10 +60,20 @@ const StyledWindow = styled.div`
     max-height: 60vh;
     overflow-y: auto;
     padding-inline: 4px;
-  }
 
-  .modal-footer {
+    &::-webkit-scrollbar {
+      display: none;
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+    }
   }
+`;
+
+const ModalForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
 `;
 
 /*
@@ -120,13 +130,11 @@ function Window({ children, title, id, afterClose, beforeOpen }) {
     <StyledWindow onClick={clickOutside}>
       <div className="modal-cover" id={id}>
         <div className="modal-container">
-          <div className="modal-heading">
-            <h3 className="center-element">{title}</h3>
-
-            <span onClick={close}>
-              <HiXMark />
-            </span>
-          </div>
+          {title && (
+            <div className="modal-heading">
+              <h3 className="center-element">{title}</h3>
+            </div>
+          )}
 
           {children}
         </div>
@@ -142,6 +150,10 @@ function Content({ children }) {
   return <div className="modal-content">{children}</div>;
 }
 
+function Form({ children, ...rest }) {
+  return <ModalForm {...rest}>{children}</ModalForm>;
+}
+
 //
 function Footer({ children }) {
   return <div className="modal-footer">{children}</div>;
@@ -151,6 +163,7 @@ function Footer({ children }) {
 Modal.Open = Open;
 Modal.Window = Window;
 Modal.Content = Content;
+Modal.Form = Form;
 Modal.Footer = Footer;
 
 export function useModal() {

@@ -3,8 +3,9 @@ import Modal from "../context/Modal";
 import { useAddAdmin } from "../hooks/adminHooks";
 import { ButtonPrimary, FormGroup } from "./elementComponents";
 import toast from "react-hot-toast";
+import { forceCloseModal } from "../utilities/utilities";
 
-function AddNewAdmin() {
+function AddAdmin() {
   const { addAdmin, addingAdmin } = useAddAdmin();
 
   const [surname, setSurname] = useState("");
@@ -20,7 +21,7 @@ function AddNewAdmin() {
     if (password !== confirmPassword) return toast.error("Passwords do not match");
 
     const data = { surname: surname, otherNames: otherNames, email: email, password: password };
-    addAdmin(data, { onSuccess: closeModal });
+    addAdmin(data, { onSuccess: () => forceCloseModal(modalId) });
   }
 
   function clearNewAdminForm() {
@@ -29,11 +30,6 @@ function AddNewAdmin() {
     setEmail("");
     setPassword("");
     setConfirmPassword("");
-  }
-
-  function closeModal() {
-    const modal = document.getElementById(modalId);
-    modal.parentElement.click();
   }
 
   return (
@@ -92,4 +88,4 @@ function AddNewAdmin() {
   );
 }
 
-export default AddNewAdmin;
+export default AddAdmin;
