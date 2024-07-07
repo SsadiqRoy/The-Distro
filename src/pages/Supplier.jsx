@@ -1,32 +1,20 @@
 import styled from "styled-components";
 import SupplierItem from "../markups/SupplierItem";
+import { useGetSupplierSupplies } from "../hooks/supplyHooks";
+import Table from "../context/Table";
+import { useEffect, useState } from "react";
+import { DisplayAltMessage, Spinner } from "../components/elementComponents";
 
 const StyledMain = styled.main`
   width: 100%;
-  height: 10rem;
   flex-grow: 1;
-  padding-right: 1.5rem;
 
-  overflow: auto;
-  position: relative;
-`;
-const TableHead = styled.div`
-  width: 100%;
-  min-width: 1000px;
-  padding: 1rem;
-  background-color: var(--cl-bg-white);
-  border-bottom: 1px solid var(--cl-border-opacity);
-  text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
 
-  position: sticky;
-  top: 0;
-  z-index: 2;
-
-  display: grid;
-  grid-template-columns: 1fr 1.5fr 0.3fr 1fr 1fr 1fr 0.2fr 1fr;
-  gap: 0.5rem;
-  justify-items: center;
-  align-items: center;
+  > :first-child {
+    flex-grow: 1;
+  }
 `;
 
 /*
@@ -37,21 +25,40 @@ const TableHead = styled.div`
 */
 
 function Supplier() {
+  const [meta, setMeta] = useState({});
+  const [supplies, setSupplies] = useState();
+  const { data, isLoading } = useGetSupplierSupplies();
+
+  useEffect(() => {
+    data && setMeta(data.meta);
+    data && setSupplies(data.data);
+  }, [data]);
+
+  const labels = [
+    "image",
+    "name",
+    "quantity",
+    ["current price", { justifySelf: "left", marginLeft: "2rem" }],
+    ["new price", { justifySelf: "left", marginLeft: "2rem" }],
+    "-",
+    "",
+    "-",
+  ];
   return (
     <StyledMain>
-      <TableHead>
-        <span>image</span>
-        <span>name</span>
-        <span>quantity</span>
-        <span>current Prices</span>
-        <span>new prices</span>
-        <span>-</span>
-        <seperatebuttons></seperatebuttons>
-        <span>-</span>
-      </TableHead>
-      {Array.from({ length: 24 }).map((item, i) => (
-        <SupplierItem key={i} id={i} />
-      ))}
+      <Table>
+        <Table.Window>
+          <Table.Head gridColumn="1fr 1.5fr 0.3fr 1fr 1fr 1fr 0.2fr 1fr" labels={labels} />
+
+          <Table.Body>
+            {isLoading && <Spinner />}
+            {!isLoading && !meta.length && <DisplayAltMessage message="No active supply request" />}
+            {!isLoading && meta.length && supplies.map((supply) => <SupplierItem supply={supply} key={supply.id} />)}
+          </Table.Body>
+
+          <Table.Footer total={meta.total} consumed={meta.consumed} page={meta.page} next={meta.available} prev={meta.previous} />
+        </Table.Window>
+      </Table>
     </StyledMain>
   );
 }

@@ -6,6 +6,7 @@ import ProductItem from "../markups/ProductItem";
 import { useGetProducts } from "../hooks/productHooks";
 import { useEffect, useState } from "react";
 import AddProduct from "../components/AddProduct";
+import DashboardHeading from "../layouts/DashboardHeading";
 
 const StyledContent = styled.div`
   display: flex;
@@ -36,28 +37,31 @@ function Products() {
   }, [data]);
 
   return (
-    <StyledContent>
-      <Table>
-        <Table.Window>
-          <Table.Head
-            labels={["image", "color", "name", "selling price", "profit", "in stock", "edit/request"]}
-            gridColumn="1fr 0.5fr 3fr 1fr 1fr 1fr 1fr"
-          />
+    <>
+      <DashboardHeading />
 
-          <Table.Body>
-            {isLoading && <Spinner />}
-            {!isLoading && !meta.length && <DisplayAltMessage message="No results found" />}
-            {products.map((p) => (
-              <ProductItem product={p} key={p.id} />
-            ))}
-          </Table.Body>
+      <StyledContent>
+        <Table>
+          <AddProduct />
+          <Table.Window>
+            <Table.Head
+              labels={["image", "color", "name", "selling price", "profit", "in stock", "edit/request"]}
+              gridColumn="1fr 0.5fr 3fr 1fr 1fr 1fr 1fr"
+            />
 
-          <Table.Footer total={meta.total} consumed={meta.consumed} prev={meta.previous} next={meta.available} page={meta.page} />
-        </Table.Window>
-      </Table>
+            <Table.Body>
+              {isLoading && <Spinner />}
+              {!isLoading && !meta.length && <DisplayAltMessage message="No results found" />}
+              {products.map((p) => (
+                <ProductItem product={p} key={p.id} />
+              ))}
+            </Table.Body>
 
-      <AddProduct />
-    </StyledContent>
+            <Table.Footer total={meta.total} consumed={meta.consumed} prev={meta.previous} next={meta.available} page={meta.page} />
+          </Table.Window>
+        </Table>
+      </StyledContent>
+    </>
   );
 }
 

@@ -1,7 +1,6 @@
 import { get, patch, post } from "../services/apiServices";
 
 export async function getProducts(filter) {
-  // console.log(filter);
   try {
     const url = `/products${filter}`;
 

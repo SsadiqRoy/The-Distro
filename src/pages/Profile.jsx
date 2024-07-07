@@ -8,6 +8,7 @@ import { useUpdateAdmin, useUpdatePassword } from "../hooks/adminHooks";
 import { useForm } from "react-hook-form";
 import { FormInput, InputLabel } from "../components/elements";
 import AddAdmin from "../components/AddAdmin";
+import DashboardHeading from "../layouts/DashboardHeading";
 
 const StyledCotent = styled.div`
   width: 100%;
@@ -140,63 +141,72 @@ function Profile() {
   }
 
   return (
-    <StyledCotent>
-      <Account>
-        <div className="image">
-          <div>
-            <img src={`${IMAGE_URL}/admins/${admin.image}`} alt={admin.fullname} title={admin.fullname} />
+    <>
+      <DashboardHeading />
+      <StyledCotent>
+        <Account>
+          <div className="image">
+            <div>
+              <img src={`${IMAGE_URL}/admins/${admin.image}`} alt={admin.fullname} title={admin.fullname} />
+            </div>
           </div>
-        </div>
-        <form onSubmit={handleUpdate}>
-          <FormGroup disabled={updatingAdmin} label="surname" id="surname" value={surname} onChange={(e) => setSurname(e.target.value)} />
-          <FormGroup disabled={updatingAdmin} label="other name" id="other-name" value={otherNames} onChange={(e) => setOtherNames(e.target.value)} />
-          <FormGroup disabled={updatingAdmin} label="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <FormGroup disabled={updatingAdmin} label="image" id="admin-image" type="file" files={file} onChange={(e) => setFile(e.target.files)} />
+          <form onSubmit={handleUpdate}>
+            <FormGroup disabled={updatingAdmin} label="surname" id="surname" value={surname} onChange={(e) => setSurname(e.target.value)} />
+            <FormGroup
+              disabled={updatingAdmin}
+              label="other name"
+              id="other-name"
+              value={otherNames}
+              onChange={(e) => setOtherNames(e.target.value)}
+            />
+            <FormGroup disabled={updatingAdmin} label="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <FormGroup disabled={updatingAdmin} label="image" id="admin-image" type="file" files={file} onChange={(e) => setFile(e.target.files)} />
 
-          <Button data="Save" $shape="square" $size="large" disabled={updatingAdmin} />
-        </form>
-      </Account>
-
-      <Password>
-        <div>
-          <div className="center-element">
-            <strong>Change Password</strong>
-          </div>
-
-          <form onSubmit={handleSubmit(handlePassword)}>
-            <FormGroupFree>
-              <InputLabel>
-                current password
-                <span>{errors?.currentPassword?.message}</span>
-              </InputLabel>
-              <FormInput disabled={updatingPassword} id="current-password" type="password" {...registerCurPas} />
-            </FormGroupFree>
-
-            <FormGroupFree>
-              <InputLabel>
-                new password
-                <span>{errors?.newPassword?.message}</span>
-              </InputLabel>
-              <FormInput disabled={updatingPassword} id="new-password" type="password" {...registerNewpas} />
-            </FormGroupFree>
-
-            <FormGroupFree>
-              <InputLabel>
-                confirm password
-                <span>{errors?.confirmPassword?.message}</span>
-              </InputLabel>
-              <FormInput disabled={updatingPassword} id="confirm-password" type="password" {...registerConfPas} />
-            </FormGroupFree>
-
-            <Button disabled={updatingPassword} $shape="square" $size="large" data="save" />
+            <Button data="Save" $shape="square" $size="large" disabled={updatingAdmin} />
           </form>
-        </div>
+        </Account>
 
-        <div>
-          <AddAdmin />
-        </div>
-      </Password>
-    </StyledCotent>
+        <Password>
+          <div>
+            <div className="center-element">
+              <strong>Change Password</strong>
+            </div>
+
+            <form onSubmit={handleSubmit(handlePassword)}>
+              <FormGroupFree>
+                <InputLabel>
+                  current password
+                  <span>{errors?.currentPassword?.message}</span>
+                </InputLabel>
+                <FormInput disabled={updatingPassword} id="current-password" type="password" {...registerCurPas} />
+              </FormGroupFree>
+
+              <FormGroupFree>
+                <InputLabel>
+                  new password
+                  <span>{errors?.newPassword?.message}</span>
+                </InputLabel>
+                <FormInput disabled={updatingPassword} id="new-password" type="password" {...registerNewpas} />
+              </FormGroupFree>
+
+              <FormGroupFree>
+                <InputLabel>
+                  confirm password
+                  <span>{errors?.confirmPassword?.message}</span>
+                </InputLabel>
+                <FormInput disabled={updatingPassword} id="confirm-password" type="password" {...registerConfPas} />
+              </FormGroupFree>
+
+              <Button disabled={updatingPassword} $shape="square" $size="large" data="save" />
+            </form>
+          </div>
+
+          <div>
+            <AddAdmin />
+          </div>
+        </Password>
+      </StyledCotent>
+    </>
   );
 }
 

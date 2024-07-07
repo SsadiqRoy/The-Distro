@@ -6,6 +6,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useResponsive } from "../context/Responsive";
 import { TbLayoutDashboard } from "react-icons/tb";
+import { getCurrentPage } from "../utilities/utilities";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -48,6 +49,8 @@ function ClientHeader() {
   const { isDarkMode, toggleDarkMode } = useResponsive();
   const navigate = useNavigate();
 
+  const currentPage = getCurrentPage();
+
   const colorThemeIcon = isDarkMode ? (
     <LuSun title="Light Mode" onClick={toggleDarkMode} />
   ) : (
@@ -61,13 +64,17 @@ function ClientHeader() {
           <img src="../../public/images/logo-no-name.svg" alt="The Distro Logo" />
         </NavLink>
         <div className="header-icons">
-          <NavLink to="/store">
-            <HiOutlineBuildingStorefront title="Store" />
-          </NavLink>
+          {currentPage !== "store" && (
+            <NavLink to="/store">
+              <HiOutlineBuildingStorefront title="Store" />
+            </NavLink>
+          )}
 
-          <NavLink to="/supplier">
-            <SiDatabricks title="Supplier" />
-          </NavLink>
+          {currentPage !== "supplier" && (
+            <NavLink to="/supplier">
+              <SiDatabricks title="Supplier" />
+            </NavLink>
+          )}
         </div>
       </div>
 

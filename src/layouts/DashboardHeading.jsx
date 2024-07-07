@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Spinner } from "../components/elementComponents";
 import styled from "styled-components";
-import { logout } from "../models/adminModel";
+import { FaSortNumericDown, FaSortNumericUpAlt } from "react-icons/fa";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -57,11 +57,12 @@ const StyledHeader = styled.header`
   }
 `;
 
-const RangeInputs = styled.div`
+const StyledRangeInputs = styled.div`
   display: flex;
   gap: 1rem;
 
-  input {
+  input,
+  button {
     background-color: transparent;
     border: 2px solid var(--cl-border);
     padding: 3px 5px;
@@ -73,41 +74,6 @@ const RangeInputs = styled.div`
 function DashboardHeading() {
   const { isDarkMode, toggleDarkMode, setOpenSidebar } = useResponsive();
   const { logOut, logingOut } = useLogout();
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
-  const navigator = useNavigate();
-
-  const excludeRangePages = ["profile"];
-  const currentPageActive = getCurrentPage();
-  const includes = excludeRangePages.includes(currentPageActive);
-
-  useEffect(() => {
-    let filter = window.location.search;
-
-    if (from) filter = filter ? `${filter}&createdAt[gte]=${from}` : `?createdAt[gte]=${from}`;
-    if (to) {
-      let newTo = new Date(to).getTime() + 86400000;
-      newTo = new Date(newTo).toISOString().split("T")[0];
-      filter = filter ? `${filter}&createdAt[lte]=${newTo}` : `?createdAt[lte]=${newTo}`;
-    }
-
-    if (filter) {
-      const filterObj = fromSearchString(filter);
-      const newfilter = toSearchString(filterObj);
-      const { pathname } = window.location;
-
-      const url = pathname + newfilter;
-      // console.log(url);
-      navigator(url);
-    }
-
-    // from && setSearchParams((p) => ({ ...p, "createdAt[gte]": from }));
-    // to && setSearchParams((p) => ({ ...p, "createdAt[lte]": to }));
-  }, [from, to, navigator]);
-
-  function handleLogout() {
-    logOut();
-  }
 
   const colorThemeIcon = isDarkMode ? (
     <LuSun title="Light Mode" onClick={toggleDarkMode} />
@@ -134,20 +100,14 @@ function DashboardHeading() {
 
       <div className="header-right">
         <div className="header-icons">
-          {!includes && (
-            <RangeInputs>
-              <input type="date" value={from} onChange={(e) => setFrom(e.target.value)} />
-              <input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
-            </RangeInputs>
-          )}
-
+          <RangeInputs />
           {colorThemeIcon}
           {logingOut ? (
             <span style={{ width: "2rem", height: "2rem" }}>
               <Spinner />
             </span>
           ) : (
-            <LuLogIn title="Login" onClick={handleLogout} />
+            <LuLogIn title="Login" onClick={logOut} />
           )}
         </div>
       </div>
@@ -156,3 +116,56 @@ function DashboardHeading() {
 }
 
 export default DashboardHeading;
+
+/*
+
+
+
+
+*/
+
+function RangeInputs() {
+  const navigator = useNavigate();
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [sort, setSort] = useState("");
+
+  const excludeRangePages = ["profile"];
+  const currentActivePage = getCurrentPage();
+  const includes = excludeRangePages.includes(currentActivePage);
+
+  useEffect(() => {
+    let filter = window.location.search;
+
+    if (sort) filter = filter ? `${filter}&sort=${sort}` : `?sort=${sort}`;
+    if (from) filter = filter ? `${filter}&createdAt[gte]=${from}` : `?createdAt[gte]=${from}`;
+    if (to) {
+      let newTo = new Date(to).getTime() + 86400000;
+      newTo = new Date(newTo).toISOString().split("T")[0];
+      filter = filter ? `${filter}&createdAt[lte]=${newTo}` : `?createdAt[lte]=${newTo}`;
+    }
+
+    if (filter) {
+      filter = fromSearchString(filter);
+      filter = toSearchString(filter);
+
+      const { pathname } = window.location;
+      const url = pathname + filter;
+      navigator(url);
+    }
+  }, [sort, from, to, navigator]);
+
+  return includes ? null : (
+    <StyledRangeInputs>
+      <button>
+        {!sort || sort === "-createdAt" ? (
+          <FaSortNumericUpAlt onClick={() => setSort("createdAt")} />
+        ) : (
+          <FaSortNumericDown onClick={() => setSort("-createdAt")} />
+        )}
+      </button>
+      <input type="date" value={from} onChange={(e) => setFrom(e.target.value)} />
+      <input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
+    </StyledRangeInputs>
+  );
+}

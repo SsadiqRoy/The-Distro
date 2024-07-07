@@ -6,6 +6,7 @@ import { Area, AreaChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContaine
 import styled from "styled-components";
 import Table from "../context/Table";
 import PurchaseItem from "../markups/PurchaseItem";
+import DashboardHeading from "../layouts/DashboardHeading";
 
 const StyledDashboard = styled.div`
   height: 20rem;
@@ -268,112 +269,116 @@ const growthData = [
 
 function Dashboard() {
   return (
-    <StyledDashboard>
-      <SummaryContainer>
-        <SummaryItem color="#1e8fff" title="pending request" value={24}>
-          <MdOutlinePending />
-        </SummaryItem>
-        <SummaryItem color="#ff1e1e" title="out of stock" value={24} iconScale="0.5">
-          <BsBoxes />
-        </SummaryItem>
-        <SummaryItem color="#e6cf00" title="pending supply" value={24}>
-          <AiOutlineFieldTime />
-        </SummaryItem>
-        <SummaryItem color="#04da1d" title="current account" value="$2,702,278.00" fontSize="1.6rem">
-          <MdAttachMoney />
-        </SummaryItem>
-      </SummaryContainer>
+    <>
+      <DashboardHeading />
 
-      <SharesContainer>
-        <ShareItem title="Profit shares" data={profitShare} datakey="name">
-          <ResponsiveContainer>
-            <PieChart width="100%" height="100%">
-              <Pie
-                data={profitShare}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={90}
-                innerRadius={60}
-                fill="color"
-                paddingAngle={2}
-              >
-                {profitShare.map((d) => (
-                  <Cell key={d.color} fill={d.color} stroke={d.color} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-        </ShareItem>
+      <StyledDashboard>
+        <SummaryContainer>
+          <SummaryItem color="#1e8fff" title="pending request" value={24}>
+            <MdOutlinePending />
+          </SummaryItem>
+          <SummaryItem color="#ff1e1e" title="out of stock" value={24} iconScale="0.5">
+            <BsBoxes />
+          </SummaryItem>
+          <SummaryItem color="#e6cf00" title="pending supply" value={24}>
+            <AiOutlineFieldTime />
+          </SummaryItem>
+          <SummaryItem color="#04da1d" title="current account" value="$2,702,278.00" fontSize="1.6rem">
+            <MdAttachMoney />
+          </SummaryItem>
+        </SummaryContainer>
 
-        <ShareItem title="sales shares" data={profitShare} datakey="name">
-          <ResponsiveContainer>
-            <PieChart width="100%" height="100%">
-              <Pie data={profitShare} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={90} fill="color">
-                {profitShare.map((d) => (
-                  <Cell key={d.name} fill={d.color} stroke={d.color} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-        </ShareItem>
-      </SharesContainer>
-
-      <GrowthContainer>
-        <div>
-          <strong>Sales</strong>
-          <div className="chart">
+        <SharesContainer>
+          <ShareItem title="Profit shares" data={profitShare} datakey="name">
             <ResponsiveContainer>
-              <AreaChart width="100%" height="100%" data={growthData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="var(--cl-product-1)" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="var(--cl-product-1)" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="var(--cl-product-2)" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="var(--cl-product-2)" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip />
-                <Area type="monotone" dataKey="uv" stroke="var(--cl-product-1)" fillOpacity={1} fill="url(#colorUv)" />
-                <Area type="monotone" dataKey="pv" stroke="var(--cl-product-2)" fillOpacity={1} fill="url(#colorPv)" />
-              </AreaChart>
+              <PieChart width="100%" height="100%">
+                <Pie
+                  data={profitShare}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={90}
+                  innerRadius={60}
+                  fill="color"
+                  paddingAngle={2}
+                >
+                  {profitShare.map((d) => (
+                    <Cell key={d.color} fill={d.color} stroke={d.color} />
+                  ))}
+                </Pie>
+              </PieChart>
             </ResponsiveContainer>
-          </div>
-          <div className="graphs">
-            <GraphCheck name="product 1" id="product-1" color="var(--cl-product-1)" checked={true} />
-            <GraphCheck name="product 2" id="product-2" color="var(--cl-product-2)" checked={true} />
-            <GraphCheck name="product 3" id="product-3" color="var(--cl-product-3)" />
-            <GraphCheck name="product 4" id="product-4" color="var(--cl-product-4)" />
-            <GraphCheck name="product 5" id="product-5" color="var(--cl-product-5)" />
-          </div>
-        </div>
-      </GrowthContainer>
+          </ShareItem>
 
-      <Table>
-        <Table.Window>
-          <strong style={{ fontSize: "2rem", padding: "1rem", marginBottom: "1rem" }}>Purchase Requests</strong>
-          <Table.Head
-            labels={["image", "name", "quantity", "unit price", "total price", "available", "-", "-"]}
-            gridColumn="1fr 3fr 1fr 1fr 1fr 1fr 1fr 1fr"
-          />
+          <ShareItem title="sales shares" data={profitShare} datakey="name">
+            <ResponsiveContainer>
+              <PieChart width="100%" height="100%">
+                <Pie data={profitShare} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={90} fill="color">
+                  {profitShare.map((d) => (
+                    <Cell key={d.name} fill={d.color} stroke={d.color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          </ShareItem>
+        </SharesContainer>
 
-          <Table.Body>
-            {Array.from({ length: 3 }).map((item, i) => (
-              <PurchaseItem key={i} number={5} />
-            ))}
-            {Array.from({ length: 3 }).map((item, i) => (
-              <PurchaseItem key={i + 3} number={1} />
-            ))}
-          </Table.Body>
-        </Table.Window>
-      </Table>
-    </StyledDashboard>
+        <GrowthContainer>
+          <div>
+            <strong>Sales</strong>
+            <div className="chart">
+              <ResponsiveContainer>
+                <AreaChart width="100%" height="100%" data={growthData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="var(--cl-product-1)" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="var(--cl-product-1)" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="var(--cl-product-2)" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="var(--cl-product-2)" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Tooltip />
+                  <Area type="monotone" dataKey="uv" stroke="var(--cl-product-1)" fillOpacity={1} fill="url(#colorUv)" />
+                  <Area type="monotone" dataKey="pv" stroke="var(--cl-product-2)" fillOpacity={1} fill="url(#colorPv)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="graphs">
+              <GraphCheck name="product 1" id="product-1" color="var(--cl-product-1)" checked={true} />
+              <GraphCheck name="product 2" id="product-2" color="var(--cl-product-2)" checked={true} />
+              <GraphCheck name="product 3" id="product-3" color="var(--cl-product-3)" />
+              <GraphCheck name="product 4" id="product-4" color="var(--cl-product-4)" />
+              <GraphCheck name="product 5" id="product-5" color="var(--cl-product-5)" />
+            </div>
+          </div>
+        </GrowthContainer>
+
+        <Table>
+          <Table.Window>
+            <strong style={{ fontSize: "2rem", padding: "1rem", marginBottom: "1rem" }}>Purchase Requests</strong>
+            <Table.Head
+              labels={["image", "name", "quantity", "unit price", "total price", "available", "-", "-"]}
+              gridColumn="1fr 3fr 1fr 1fr 1fr 1fr 1fr 1fr"
+            />
+
+            <Table.Body>
+              {Array.from({ length: 3 }).map((item, i) => (
+                <PurchaseItem key={i} number={5} />
+              ))}
+              {Array.from({ length: 3 }).map((item, i) => (
+                <PurchaseItem key={i + 3} number={1} />
+              ))}
+            </Table.Body>
+          </Table.Window>
+        </Table>
+      </StyledDashboard>
+    </>
   );
 }
 

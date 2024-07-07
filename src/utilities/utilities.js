@@ -38,7 +38,9 @@ function innerSearchString(key, filter = {}) {
   return filterArrary.map(([op, value]) => `${key}[${op}]=${value}`);
 }
 
-export function fromSearchString(string = "?") {
+export function fromSearchString(string) {
+  if (!string) return {};
+
   const arrOfArrays = string
     .slice(1)
     .split("&")

@@ -2,6 +2,8 @@ import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { Button } from "../components/elementComponents";
+import { fromSearchString } from "../utilities/utilities";
+import { useState } from "react";
 
 //
 
@@ -118,20 +120,20 @@ function Table({ children }) {
 }
 
 function Filter({ filters }) {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const active = searchParams.get("filter");
+  // * filter format [{name: 'all', value: '?sort=-createdAt'}]
+  const [, setSearchParams] = useSearchParams();
+  const [active, setActive] = useState("");
 
   function setFilter(filter) {
-    setSearchParams((curr) => {
-      return { ...curr, filter };
-    });
+    setSearchParams(filter);
+    setActive(filter);
   }
+
   return (
     <StyledFilter>
       {filters.map((filter) => (
-        <span className={active === filter ? "active" : ""} onClick={() => setFilter(filter)} key={filter}>
-          {filter}
+        <span className={active === filter.value ? "active" : ""} onClick={() => setFilter(filter.value)} key={filter.name}>
+          {filter.name}
         </span>
       ))}
     </StyledFilter>
@@ -142,25 +144,50 @@ function Window({ children }) {
   return <StyledContent>{children}</StyledContent>;
 }
 
+//
+
 function Head({ labels, gridColumn }) {
   return (
     <StyledHead $gridColumn={gridColumn}>
-      {labels.map((label) => (
-        <span key={label}>{label}</span>
-      ))}
+      {labels.map((label) => {
+        let style = {};
+        if (typeof label === "object") [label, style] = label;
+
+        return (
+          <span style={style} key={label}>
+            {label}
+          </span>
+        );
+      })}
     </StyledHead>
   );
 }
+
+//
 
 function Body({ children }) {
   return <StyledBody>{children}</StyledBody>;
 }
 
+//
+
 function Footer({ total = 0, consumed = 0, next = 0, prev = 0, page = 1 }) {
   const [, setSearchParams] = useSearchParams();
 
-  const handlePrev = () => setSearchParams((p) => ({ ...p, page: page - 1 }));
-  const handleNext = () => setSearchParams((p) => ({ ...p, page: page + 1 }));
+  const handlePrev = () =>
+    setSearchParams(() => {
+      let filters = window.location.search;
+      filters = fromSearchString(filters);
+
+      return { ...filters, page: page - 1 };
+    });
+  const handleNext = () =>
+    setSearchParams(() => {
+      let filters = window.location.search;
+      filters = fromSearchString(filters);
+
+      return { ...filters, page: page + 1 };
+    });
 
   return (
     <StyledFooter>

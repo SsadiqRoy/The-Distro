@@ -55,7 +55,7 @@ function DashboardLayout() {
         <DashboarSidebar />
 
         <Main>
-          <DashboardHeading />
+          {/* <DashboardHeading /> */}
           <Outlet />
         </Main>
       </Container>

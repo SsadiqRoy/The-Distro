@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Modal from "../context/Modal";
-import { Button, FormGroup } from "./elementComponents";
+import { Button, ButtonPrimary, FormGroup } from "./elementComponents";
 import { useAddProduct } from "../hooks/productHooks";
 import { useState } from "react";
 import { forceCloseModal } from "../utilities/utilities";
@@ -11,7 +11,7 @@ const AddProductButton = styled.div`
 `;
 
 function AddProduct() {
-  const { addProduct, isAdding } = useAddProduct();
+  const { createData, isCreating } = useAddProduct();
 
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
@@ -35,7 +35,7 @@ function AddProduct() {
     data.append("sellingPrice", sellingPrice * PRICE_UNIT);
     data.append("quantity", quantity);
 
-    addProduct(data, { onSuccess: () => forceCloseModal(modalId) });
+    createData(data, { onSuccess: () => forceCloseModal(modalId) });
   }
 
   function clearProductForm() {
@@ -52,17 +52,17 @@ function AddProduct() {
     <AddProductButton>
       <Modal>
         <Modal.Open openId={modalId}>
-          <Button $shape="square">Add Product</Button>
+          <Button $shape="square" data="add product" />
         </Modal.Open>
 
         <Modal.Window id={modalId} title="add new product" afterClose={clearProductForm}>
           <Modal.Content>
             <Modal.Form onSubmit={handleSubmit}>
-              <FormGroup required disabled={isAdding} label="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
-              <FormGroup required disabled={isAdding} label="image" id="image" type="file" onChange={(e) => setImage(e.target.files[0])} />
+              <FormGroup required disabled={isCreating} label="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
+              <FormGroup required disabled={isCreating} label="image" id="image" type="file" onChange={(e) => setImage(e.target.files[0])} />
               <FormGroup
                 required
-                disabled={isAdding}
+                disabled={isCreating}
                 label="description"
                 id="description"
                 value={description}
@@ -70,7 +70,7 @@ function AddProduct() {
               />
               <FormGroup
                 required
-                disabled={isAdding}
+                disabled={isCreating}
                 label="color"
                 id="color"
                 type="color"
@@ -80,7 +80,7 @@ function AddProduct() {
               <FormGroup
                 step="0.01"
                 required
-                disabled={isAdding}
+                disabled={isCreating}
                 label="buying price"
                 id="buying-price"
                 type="number"
@@ -90,7 +90,7 @@ function AddProduct() {
               <FormGroup
                 step="0.01"
                 required
-                disabled={isAdding}
+                disabled={isCreating}
                 label="selling price"
                 id="selling-price"
                 type="number"
@@ -99,7 +99,7 @@ function AddProduct() {
               />
               <FormGroup
                 required
-                disabled={isAdding}
+                disabled={isCreating}
                 label="quantity"
                 id="quantity"
                 type="number"
@@ -111,7 +111,7 @@ function AddProduct() {
           </Modal.Content>
 
           <Modal.Footer>
-            <Button disabled={isAdding} onClick={handleSubmit} $size="large" $shape="square" data="add product" />
+            <ButtonPrimary disabled={isCreating} onClick={handleSubmit} data="add product" />
           </Modal.Footer>
         </Modal.Window>
       </Modal>

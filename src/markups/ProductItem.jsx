@@ -110,7 +110,7 @@ export default ProductItem;
 */
 
 function EditProdcut({ product }) {
-  const { updateProduct, isUpdating } = useUpdateProduct();
+  const { updateData, isUpdating } = useUpdateProduct();
 
   const [image, setImage] = useState("");
   const [color, setColor] = useState(product.color);
@@ -132,7 +132,7 @@ function EditProdcut({ product }) {
     data.append("color", color);
     data.append("sellingPrice", sellingPrice * PRICE_UNIT);
 
-    updateProduct(data, { onSuccess: () => forceCloseModal(modalId) });
+    updateData(data, { onSuccess: () => forceCloseModal(modalId) });
   }
 
   const clearUpdateForm = () => setImage("");
@@ -200,7 +200,7 @@ function EditProdcut({ product }) {
 //
 
 function RequestSupply({ product }) {
-  const { requestSupply, isRequesting } = useRequestSupply();
+  const { createData: requestSupply, isCreating: isRequesting } = useRequestSupply();
 
   const [quantity, setQuantity] = useState("");
 
