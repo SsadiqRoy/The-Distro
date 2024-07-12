@@ -52,9 +52,7 @@ function Products() {
             <Table.Body>
               {isLoading && <Spinner />}
               {!isLoading && !meta.length && <DisplayAltMessage message="No results found" />}
-              {products.map((p) => (
-                <ProductItem product={p} key={p.id} />
-              ))}
+              {meta.length > 0 && products.map((p) => <ProductItem product={p} key={p.id} />)}
             </Table.Body>
 
             <Table.Footer total={meta.total} consumed={meta.consumed} prev={meta.previous} next={meta.available} page={meta.page} />

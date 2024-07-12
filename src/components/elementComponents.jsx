@@ -74,6 +74,13 @@ export function ButtonPrimary({ children, data, ...rest }) {
 }
 
 export function DisplayAltMessage({ message }) {
-  const style = { width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", textTransform: "capitalize" };
+  const style = {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textTransform: "capitalize",
+  };
   return <div style={style}>{message}</div>;
 }

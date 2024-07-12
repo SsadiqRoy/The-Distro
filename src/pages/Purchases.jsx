@@ -1,15 +1,26 @@
+import { useEffect, useState } from "react";
 import Table from "../context/Table";
 import DashboardHeading from "../layouts/DashboardHeading";
 import PurchaseItem from "../markups/PurchaseItem";
+import { useGetPurchases } from "../hooks/purchaseHooks";
+import { DisplayAltMessage, Spinner } from "../components/elementComponents";
 
 function Purchases() {
+  const [meta, setMeta] = useState({});
+  const [purchases, setPurchases] = useState();
+  const { data, isLoading } = useGetPurchases();
+
+  useEffect(() => {
+    data && setMeta(data.meta);
+    data && setPurchases(data.data);
+  }, [data]);
+
   const filters = [
-    { name: "all", value: "?sort=-createdAt" },
-    { name: "sent", value: "?active=true&supplierApproved=false&sort=-acceptedAt" },
-    { name: "approved", value: "?active=true&supplierApproved=true&sort=-acceptedAt" },
-    { name: "accepted", value: "?active=false&requesterAccepted=true&sort=-accptedAt" },
-    { name: "canceled", value: "?active=false&requesterAccepted=false&sort=-accptedAt" },
-    { name: "past", value: "?active=false&sort=-acceptedAt,-createdAt" },
+    { name: "all", value: "?sort=-createdAt,-quantity" },
+    { name: "pending", value: "?status=pending&sort=-createdAt" },
+    { name: "approved", value: "?status=approved&sort=-statusChangedAt" },
+    { name: "declined", value: "?status=declined&sort=-statusChangedAt" },
+    { name: "past", value: "?status[in]=approved,declined&sort=-statusChangedAt" },
   ];
 
   return (
@@ -23,26 +34,13 @@ function Purchases() {
             labels={["image", "name", "quantity", "unit price", "total price", "available", "-", "-"]}
             gridColumn="1fr 3fr 1fr 1fr 1fr 1fr 1fr 1fr"
           />
-
           <Table.Body>
-            {Array.from({ length: 3 }).map((item, i) => (
-              <PurchaseItem key={i} number={5} />
-            ))}
-            {Array.from({ length: 3 }).map((item, i) => (
-              <PurchaseItem key={i + 3} number={1} />
-            ))}
-            {Array.from({ length: 3 }).map((item, i) => (
-              <PurchaseItem key={i + 6} number={2} />
-            ))}
-            {Array.from({ length: 3 }).map((item, i) => (
-              <PurchaseItem key={i + 9} number={3} />
-            ))}
-            {Array.from({ length: 3 }).map((item, i) => (
-              <PurchaseItem key={i + 12} number={4} />
-            ))}
-          </Table.Body>
+            {isLoading && <Spinner />}
+            {!isLoading && !meta.length && <DisplayAltMessage message="No purchase Request available" />}
 
-          <Table.Footer total={26} consumed={10} />
+            {meta.length > 0 && purchases.map((purchase) => <PurchaseItem key={purchase.id} purchase={purchase} />)}
+          </Table.Body>
+          <Table.Footer total={meta.total} consumed={meta.consumed} page={meta.page} next={meta.available} prev={meta.previous} />{" "}
         </Table.Window>
       </Table>
     </>

@@ -40,7 +40,7 @@ function Supplies() {
           <Table.Body>
             {isLoading && <Spinner />}
             {!isLoading && !meta.length && <DisplayAltMessage message="No supply request" />}
-            {meta.length && supplies.map((supply) => <SupplyItem key={supply.id} supply={supply} />)}
+            {meta.length > 0 && supplies.map((supply) => <SupplyItem key={supply.id} supply={supply} />)}
           </Table.Body>
 
           <Table.Footer total={meta.total} consumed={meta.consumed} page={meta.page} next={meta.available} prev={meta.previous} />

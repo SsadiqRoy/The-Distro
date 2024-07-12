@@ -139,7 +139,7 @@ button{
   }
 
   &:focus {
-    outline: 2px solid var(--cl-primary-opacity);
+    outline: 2px solid var(--cl-border);
     outline-offset: 2px;
   }
 

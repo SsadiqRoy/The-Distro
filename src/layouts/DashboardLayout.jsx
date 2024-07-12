@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-import DashboardHeading from "./DashboardHeading";
 import styled from "styled-components";
 import DashboarSidebar from "./DashboarSidebar";
 
@@ -38,6 +37,7 @@ const Container = styled.div`
 const Main = styled.main`
   width: 100%;
   height: 100%;
+  overflow: hidden;
 
   display: flex;
   gap: 2rem;
@@ -55,7 +55,6 @@ function DashboardLayout() {
         <DashboarSidebar />
 
         <Main>
-          {/* <DashboardHeading /> */}
           <Outlet />
         </Main>
       </Container>

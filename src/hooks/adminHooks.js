@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addNewAdmin, login, logout, mySelf, updateAdmin, updatePassword } from "../models/adminModel";
+import { addNewAdmin, login, logout, mySelf, myWallet, updateAdmin, updatePassword } from "../models/adminModel";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { getErrMessage } from "../utilities/utilities";
@@ -45,6 +45,12 @@ export function useGetAdmin() {
   const { isLoading, data } = useQuery({ queryKey, queryFn: mySelf });
 
   return { isLoading, admin: data };
+}
+
+export function useGetWallet() {
+  const { isLoading, data } = useQuery({ queryKey: ["wallet"], queryFn: myWallet });
+
+  return { isLoading, data };
 }
 
 export function useUpdateAdmin() {

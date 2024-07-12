@@ -1,7 +1,7 @@
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
 import { RiMenuUnfold3Line } from "react-icons/ri";
 import { LuLogIn, LuSun } from "react-icons/lu";
-import { fromSearchString, getCurrentPage, toSearchString } from "../utilities/utilities";
+import { fromSearchString, toSearchString } from "../utilities/utilities";
 import { useResponsive } from "../context/Responsive";
 import { SiDatabricks } from "react-icons/si";
 import { FaRegMoon } from "react-icons/fa6";
@@ -71,7 +71,7 @@ const StyledRangeInputs = styled.div`
   }
 `;
 
-function DashboardHeading() {
+function DashboardHeading({ range = true, sort = true }) {
   const { isDarkMode, toggleDarkMode, setOpenSidebar } = useResponsive();
   const { logOut, logingOut } = useLogout();
 
@@ -100,7 +100,7 @@ function DashboardHeading() {
 
       <div className="header-right">
         <div className="header-icons">
-          <RangeInputs />
+          <RangeInputs range={range} sorting={sort} />
           {colorThemeIcon}
           {logingOut ? (
             <span style={{ width: "2rem", height: "2rem" }}>
@@ -124,15 +124,11 @@ export default DashboardHeading;
 
 */
 
-function RangeInputs() {
+function RangeInputs({ range, sorting }) {
   const navigator = useNavigate();
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [sort, setSort] = useState("");
-
-  const excludeRangePages = ["profile"];
-  const currentActivePage = getCurrentPage();
-  const includes = excludeRangePages.includes(currentActivePage);
 
   useEffect(() => {
     let filter = window.location.search;
@@ -155,17 +151,23 @@ function RangeInputs() {
     }
   }, [sort, from, to, navigator]);
 
-  return includes ? null : (
+  return (
     <StyledRangeInputs>
-      <button>
-        {!sort || sort === "-createdAt" ? (
-          <FaSortNumericUpAlt onClick={() => setSort("createdAt")} />
-        ) : (
-          <FaSortNumericDown onClick={() => setSort("-createdAt")} />
-        )}
-      </button>
-      <input type="date" value={from} onChange={(e) => setFrom(e.target.value)} />
-      <input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
+      {sorting && (
+        <button>
+          {!sort || sort === "-createdAt" ? (
+            <FaSortNumericUpAlt onClick={() => setSort("createdAt")} />
+          ) : (
+            <FaSortNumericDown onClick={() => setSort("-createdAt")} />
+          )}
+        </button>
+      )}
+      {range && (
+        <>
+          <input type="date" value={from} onChange={(e) => setFrom(e.target.value)} />
+          <input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
+        </>
+      )}
     </StyledRangeInputs>
   );
 }

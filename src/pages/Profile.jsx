@@ -142,7 +142,8 @@ function Profile() {
 
   return (
     <>
-      <DashboardHeading />
+      <DashboardHeading range={false} sort={false} />
+
       <StyledCotent>
         <Account>
           <div className="image">

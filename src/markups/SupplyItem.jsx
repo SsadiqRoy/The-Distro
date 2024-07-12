@@ -107,7 +107,7 @@ function ActionButtons({ supply }) {
   const modalIdAccept = "accept-" + supply.id;
 
   function handleCancel() {
-    acceptSupply({ id: supply.id }, { onSuccess: () => forceCloseModal(modalIdCancel) });
+    cancelSupply({ id: supply.id }, { onSuccess: () => forceCloseModal(modalIdCancel) });
   }
   function handleAccept() {
     acceptSupply({ requesterAccepted: true, id: supply.id }, { onSuccess: () => forceCloseModal(modalIdAccept) });

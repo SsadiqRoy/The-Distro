@@ -154,7 +154,7 @@ function Head({ labels, gridColumn }) {
         if (typeof label === "object") [label, style] = label;
 
         return (
-          <span style={style} key={label}>
+          <span style={style} key={label + Math.random()}>
             {label}
           </span>
         );

@@ -60,3 +60,13 @@ export async function addNewAdmin(data) {
     throw error;
   }
 }
+
+export async function myWallet() {
+  try {
+    const response = await get("/wallet");
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -21,7 +21,9 @@ export function submitFormOnBtnClick(btnid, formid) {
 }
 
 export function toSearchString(filter) {
+  if (!filter) return "";
   const filterArrary = Object.entries(filter);
+
   const filters = filterArrary.flatMap(([key, value]) => {
     if (typeof value === "string") return `${key}=${value}`;
     if (value.length) return `${key}=${value.join(",")}`;
@@ -39,7 +41,7 @@ function innerSearchString(key, filter = {}) {
 }
 
 export function fromSearchString(string) {
-  if (!string) return {};
+  if (!string || !string.length) return {};
 
   const arrOfArrays = string
     .slice(1)
@@ -72,6 +74,16 @@ export function fromSearchString(string) {
   return searchObj;
 }
 
+export function aggregationSearchString(filter, urlFilter) {
+  if (filter) urlFilter && (filter = filter + "&" + urlFilter);
+  if (!filter) urlFilter && (filter = "?" + urlFilter);
+
+  filter = fromSearchString(filter);
+  filter = toSearchString(filter);
+
+  return filter;
+}
+
 export function formatAmount(value, currency = "usd") {
   value = value / PRICE_UNIT;
   const format = new Intl.NumberFormat(undefined, { style: "currency", currency }).format(value);
@@ -88,4 +100,41 @@ export function getCurrentPage() {
   const pathname = window.location.pathname.split("/")[1];
 
   return pathname;
+}
+
+export function cutString(content = "", max = 60) {
+  if (content.length <= max) return content;
+  const cutTo = max - 3;
+  let cutContent = content.slice(0, cutTo) + "...";
+
+  return cutContent;
+}
+
+export function structure(data) {
+  const dates = [...new Set(data.map((d) => d.date))];
+  const products = [...new Set(data.map((d) => JSON.stringify({ id: d.product, name: d.name })))].map((p) => JSON.parse(p));
+
+  const newd = dates.map((date) => {
+    const sales = data.filter((d) => d.date === date).reduce((a, b) => a + b.sales, 0);
+
+    const obj = {
+      date: date,
+      sales,
+    };
+
+    products.forEach((p) => {
+      obj[p.id] = calProductSales(date, p.id);
+    });
+
+    return obj;
+  });
+
+  function calProductSales(date, productid) {
+    return data
+      .filter((d) => d.date === date)
+      .filter((d) => d.product === productid)
+      .reduce((cur, acc) => cur + acc.sales, 0);
+  }
+
+  return { data: newd, products };
 }
