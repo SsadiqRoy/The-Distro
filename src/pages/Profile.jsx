@@ -160,7 +160,7 @@ function Profile() {
               value={otherNames}
               onChange={(e) => setOtherNames(e.target.value)}
             />
-            <FormGroup disabled={updatingAdmin} label="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <FormGroup disabled={true} label="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <FormGroup disabled={updatingAdmin} label="image" id="admin-image" type="file" files={file} onChange={(e) => setFile(e.target.files)} />
 
             <Button data="Save" $shape="square" $size="large" disabled={updatingAdmin} />

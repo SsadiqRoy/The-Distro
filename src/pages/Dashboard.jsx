@@ -90,6 +90,8 @@ const GrowthContainer = styled.div`
 */
 
 function Dashboard() {
+  // console.log(intor);
+
   return (
     <>
       <DashboardHeading sort={false} />
