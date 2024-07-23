@@ -61,7 +61,7 @@ function ClientHeader() {
     <StyledHeader>
       <div className="header-left">
         <NavLink to="/">
-          <img src="../../public/images/logo-no-name.svg" alt="The Distro Logo" />
+          <img src="/images/logo-no-name.svg" alt="The Distro Logo" />
         </NavLink>
         <div className="header-icons">
           {currentPage !== "store" && (
